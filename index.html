@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Artispreneur: The Business of Music. Powered by AI. Six specialized AI agents to help musicians build sustainable careers.">
+    <title>Artispreneur — The Business of Music, Powered by AI</title>
+    
+    <!-- Font: Geist with Inter fallback -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    
+    <style>
+        :root {
+            /* Brand Colors */
+            --brand: #8B1A1A;
+            --brand-hover: #A52020;
+            --brand-light: #C24040;
+            --accent: #C4903A;
+            --accent-hover: #C69040;
+            
+            /* Background Colors */
+            --bg-deep: #0A0A0A;
+            --bg-primary: #111414;
+            --bg-surface: #1A1A24;
+            
+            /* Text Colors */
+            --text-primary: #F3F3F5;
+            --text-secondary: #98A8B3;
+            --text-muted: #6B6B78;
+            
+            /* Borders */
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-standard: rgba(255, 255, 255, 0.1);
+            
+            /* Typography */
+            --font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-weight-nav: 500;
+            --font-weight-body: 400;
+            --font-weight-label: 600;
+            --font-weight-headline: 800;
+            
+            /* Spacing */
+            --section-padding: 120px;
+            --container-max-width: 1200px;
+            --container-narrow: 800px;
+            
+            /* Border Radius */
+            --radius-card: 8px;
+            --radius-large: 1px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Announcement Bar */
+        .announcement-bar {
+            background: linear-gradient(90deg, var(--brand), var(--accent), var(--brand));
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+            padding: 12px 24px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            position: relative;
+            z-index: 100;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .announcement-bar a {
+            color: var(--text-primary);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-standard);
+            z-index: 90;
+            padding: 16px 0;
+        }
+        
+        .nav-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-card);
+        }
+        
+        .nav-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: var(--font-weight-nav);
+            transition: color 0.2s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-link.new::after {
+            content: 'NEW';
+            position: absolute;
+            top: -8px;
+            right: -32px;
+            font-size: 9px;
+            font-weight: 700;
+            background: var(--accent);
+            color: var(--bg-deep);
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-card);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-standard);
+        }
+        
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-primary {
+            background: var(--brand);
+            color: var(--text-primary);
+        }
+        
+        .btn-primary:hover {
+            background: var(--brand-hover);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--brand);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(139, 26, 26, 0.1);
+            border-color: var(--brand-hover);
+        }
+        
+        /* Container */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .container-narrow {
+            max-width: var(--container-narrow);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Section */
+        .section {
+            padding: var(--section-padding) 0;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 0 120px;
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-standard);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+        
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero-title {
+            font-size: 72px;
+            font-weight: var(--font-weight-headline);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--brand-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 80px;
+        }
+        
+        .hero-cta .btn {
+            padding: 14px 28px;
+            font-size: 16px;
+        }
+        
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: var(--font-weight-headline);
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        /* Video Demo */
+        .video-section {
+            padding: 80px 0;
+        }
+        
+        .video-container {
+            max-width: 960px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 9;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-standard);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .video-container:hover {
+            border-color: var(--brand);
+            transform: scale(1.01);
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        
+        .video-play {
+            width: 80px;
+            height: 80px;
+            background: var(--brand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .video-container:hover .video-play {
+            background: var(--brand-hover);
+            transform: scale(1.1);
+        }
+        
+        .video-play::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 24px solid var(--text-primary);
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            margin-left: 4px;
+        }
+        
+        .video-label {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        /* Agents Section */
+        .agents-section {
+            padding: var(--section-padding) 0;
+        }
+        
+        .section-label {
+            font-size: 13px;
+            font-weight: var(--font-weight-label);
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        
+        .section-title {
+            font-size: 48px;
+            font-weight: var(--font-weight-headline);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+        
+        /* Agent Tabs */
+        .agent-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+        
+        .agent-pill {
+            padding: 12px 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-standard);
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .agent-pill:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+        }
+        
+        .agent-pill.active {
+            background: var(--brand);
+            border-color: var(--brand);
+            color: var(--text-primary);
+        }
+        
+        /* Agent Panel */
+        .agent-panel {
+            display: none;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-standard);
+            border-radius: var(--radius-large);
+            padding: 48px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .agent-panel.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: start;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .agent-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-light));
+            border-radius: var(--radius-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        
+        .agent-info {
+            flex: 1;
+        }
+        
+        .agent-name {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        
+        .agent-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .agent-capabilities {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .capability-item {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-subtle);
+        }
+        
+        .capability-icon {
+            color: var(--accent);
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .capability-content {
+            flex: 1;
+        }
+        
+        .capability-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .capability-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .stats-row {
+                gap: 24px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .agent-panel {
+                padding: 32px 24px;
+            }
+            
+            .agent-capabilities {
+                grid-template-columns: 1fr;
+            }
+            
+            .agent-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        🎵 Artispreneur OS is now in early access — <a href="#signup">Join the waitlist</a>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="./logo.png" alt="Artispreneur" class="nav-logo-img">
+                <span class="nav-logo-text">Artispreneur</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#agents" class="nav-link">Agents</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#connect" class="nav-link new">Connect</a>
+                <a href="#academy" class="nav-link">Academy</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+            
+            <div class="nav-cta">
+                <a href="#signin" class="btn btn-ghost">Sign In</a>
+                <a href="#signup" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                <span>Your Music Business Operating System</span>
+            </div>
+            
+            <h1 class="hero-title">The Business of Music.<br><span class="gold-gradient">Powered by AI.</span></h1>
+            
+            <p class="hero-subtitle">
+                Artispreneur equips independent and signed musicians with a personal AI manager, six specialized agents, and professional tools to build a sustainable music business — all in one workspace.
+            </p>
+            
+            <div class="hero-cta">
+                <a href="#signup" class="btn btn-primary">Get Started Free →</a>
+                <a href="#agents" class="btn btn-outline">Meet Your Agents</a>
+            </div>
+            
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">78K+</div>
+                    <div class="stat-label">Verified Contacts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">AI Agents</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Your Ownership</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Video Demo Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container" onclick="alert('Video player would load here')">
+                <div class="video-placeholder">
+                    <div class="video-play"></div>
+                    <div class="video-label">Watch how ArtispreneurOS works (2 min)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Agents Section -->
+    <section class="agents-section" id="agents">
+        <div class="container">
+            <div class="section-label">⚡ AGENT WORKSPACE</div>
+            <h2 class="section-title">Six AI Agents. One Operating System.</h2>
+            <p class="section-description">
+                Every Artispreneur gets a full team of specialized AI agents that handle the business of music — from royalties and contracts to distribution and ad spend. Everything a label does, powered by AI.
+            </p>
+            
+            <div class="agent-tabs">
+                <div class="agent-pill active" data-agent="pro">P.R.O. Agent</div>
+                <div class="agent-pill" data-agent="distribution">Distribution Agent</div>
+                <div class="agent-pill" data-agent="licensing">Licensing Agent</div>
+                <div class="agent-pill" data-agent="legal">Legal Agent</div>
+                <div class="agent-pill" data-agent="business">Business Agent</div>
+                <div class="agent-pill" data-agent="marketing">Marketing Agent</div>
+            </div>
+            
+            <!-- P.R.O. Agent Panel -->
+            <div class="agent-panel active" id="pro-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">🎵</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">P.R.O. Agent</h3>
+                        <p class="agent-description">
+                            Manages your Performance Rights Organization registrations, tracks performances, and ensures you collect every royalty you've earned across all territories.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Multi-PRO Registration</div>
+                            <div class="capability-text">Register works with ASCAP, BMI, SESAC, and international PROs simultaneously</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Performance Tracking</div>
+                            <div class="capability-text">Monitor radio, TV, live venue, and digital performances across all platforms</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Royalty Optimization</div>
+                            <div class="capability-text">Identify missing royalties and ensure proper splits are registered</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Global Collection</div>
+                            <div class="capability-text">Coordinate with sub-publishers and collection societies worldwide</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Distribution Agent Panel -->
+            <div class="agent-panel" id="distribution-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">🌍</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">Distribution Agent</h3>
+                        <p class="agent-description">
+                            Streamlines your release strategy across all major platforms, manages metadata, and optimizes your distribution network for maximum reach and revenue.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Multi-Platform Upload</div>
+                            <div class="capability-text">Distribute to Spotify, Apple Music, Tidal, and 150+ platforms in one upload</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Metadata Management</div>
+                            <div class="capability-text">Ensure ISRC codes, credits, and metadata are accurate across all platforms</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Release Strategy</div>
+                            <div class="capability-text">Optimize timing, pre-save campaigns, and promotional windows</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Revenue Analytics</div>
+                            <div class="capability-text">Track streams, downloads, and revenue across all distribution channels</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Licensing Agent Panel -->
+            <div class="agent-panel" id="licensing-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">📜</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">Licensing Agent</h3>
+                        <p class="agent-description">
+                            Identifies sync licensing opportunities, manages mechanical licenses, and negotiates placements in film, TV, games, and advertising.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Sync Opportunities</div>
+                            <div class="capability-text">Match your catalog with music supervisors seeking specific sounds and moods</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Mechanical Licensing</div>
+                            <div class="capability-text">Automate compulsory licenses and manage cover song clearances</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Deal Negotiation</div>
+                            <div class="capability-text">Benchmark rates and negotiate favorable terms for sync placements</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Catalog Valuation</div>
+                            <div class="capability-text">Assess licensing potential and identify high-value tracks for pitching</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Legal Agent Panel -->
+            <div class="agent-panel" id="legal-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">⚖️</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">Legal Agent</h3>
+                        <p class="agent-description">
+                            Reviews contracts, protects your intellectual property, and ensures you understand every clause before signing. Your AI-powered legal advisor.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Contract Review</div>
+                            <div class="capability-text">Analyze record deals, publishing agreements, and management contracts</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">IP Protection</div>
+                            <div class="capability-text">File copyrights, monitor infringements, and protect your creative works</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Clause Explanation</div>
+                            <div class="capability-text">Break down complex legal language into plain English you can understand</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Deal Comparison</div>
+                            <div class="capability-text">Compare multiple offers side-by-side to identify the best terms</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Agent Panel -->
+            <div class="agent-panel" id="business-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">💼</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">Business Agent</h3>
+                        <p class="agent-description">
+                            Manages your finances, budgets, and business strategy. Tracks income streams, forecasts revenue, and helps you make data-driven decisions.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Income Tracking</div>
+                            <div class="capability-text">Consolidate revenue from streaming, sync, merchandise, and live shows</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Budget Planning</div>
+                            <div class="capability-text">Create budgets for recording, marketing, touring, and production</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Revenue Forecasting</div>
+                            <div class="capability-text">Project future income based on trends and upcoming releases</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Tax Planning</div>
+                            <div class="capability-text">Track deductible expenses and prepare for quarterly tax payments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marketing Agent Panel -->
+            <div class="agent-panel" id="marketing-panel">
+                <div class="agent-header">
+                    <div class="agent-icon">📣</div>
+                    <div class="agent-info">
+                        <h3 class="agent-name">Marketing Agent</h3>
+                        <p class="agent-description">
+                            Builds your brand, manages social media strategy, optimizes ad spend, and connects you with fans. Your AI-powered marketing team.
+                        </p>
+                    </div>
+                </div>
+                <div class="agent-capabilities">
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Social Strategy</div>
+                            <div class="capability-text">Plan content calendars and optimize posting times across platforms</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Ad Management</div>
+                            <div class="capability-text">Create and optimize Meta, TikTok, and YouTube ad campaigns</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Fan Engagement</div>
+                            <div class="capability-text">Build email lists, manage newsletters, and grow your community</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <div class="capability-icon">✓</div>
+                        <div class="capability-content">
+                            <div class="capability-title">Analytics Dashboard</div>
+                            <div class="capability-text">Track engagement, conversions, and ROI across all marketing channels</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Agent Tab Switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const pills = document.querySelectorAll('.agent-pill');
+            const panels = document.querySelectorAll('.agent-panel');
+            
+            pills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    const agentId = this.getAttribute('data-agent');
+                    
+                    // Remove active from all pills and panels
+                    pills.forEach(p => p.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active to clicked pill and corresponding panel
+                    this.classList.add('active');
+                    document.getElementById(agentId + '-panel').classList.add('active');
+                });
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
