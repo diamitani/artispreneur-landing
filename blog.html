@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Artispreneur</title>
+<meta name="description" content="Music industry insights, artist entrepreneurship guides, and Artispreneur product updates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--max-w:800px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.7}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;background:rgba(9,9,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.nav-logo .accent{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text-muted);font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+main{padding-top:100px;padding-bottom:80px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:900;text-align:center;margin-bottom:8px}
+.page-sub{text-align:center;font-size:16px;color:var(--text-muted);margin-bottom:48px}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:20px;transition:all .2s}
+.post-card:hover{border-color:var(--border-light)}
+.post-card .post-date{font-size:12px;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.post-card h2{font-size:20px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.post-card .excerpt{font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:12px}
+.post-card .read-more{font-size:13px;font-weight:600}
+.post-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-right:6px;background:var(--gold-muted);color:var(--gold);text-transform:uppercase}
+.cta{text-align:center;margin-top:48px;padding:36px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
+.cta p{font-size:14px;color:var(--text-muted)}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 32px;text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+@media(max-width:768px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+    <div class="nav-links">
+      <a href="index.html#agents">Agents</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="academy.html">Academy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Blog</h1>
+  <p class="page-sub">Music industry insights, artist entrepreneurship, and Artispreneur updates.</p>
+
+  <article class="post-card">
+    <div class="post-date">July 2026</div>
+    <h2>Introducing Artispreneur OS: Your Music Business Operating System</h2>
+    <p class="excerpt">Six AI agents, one workspace, zero cost to start. Here's how we're giving independent artists the infrastructure that used to require a major label deal.</p>
+    <span class="post-tag">Product</span>
+    <span class="post-tag">AI Agents</span>
+    <a href="#" class="read-more">Read more →</a>
+  </article>
+
+  <article class="post-card">
+    <div class="post-date">July 2026</div>
+    <h2>What Every Artist Should Register with Their PRO — And Why Most Don't</h2>
+    <p class="excerpt">Performance royalties are one of the most overlooked revenue streams for independent musicians. Our PRO Agent automates the process, but here's what you need to know to do it yourself.</p>
+    <span class="post-tag">Royalties</span>
+    <span class="post-tag">PROs</span>
+    <a href="#" class="read-more">Read more →</a>
+  </article>
+
+  <article class="post-card">
+    <div class="post-date">June 2026</div>
+    <h2>LLC vs Sole Proprietor for Musicians: When to Make the Switch</h2>
+    <p class="excerpt">The tax implications, liability protection, and practical steps for forming a business entity as an independent artist. Plus: how our Legal Agent handles the paperwork.</p>
+    <span class="post-tag">Legal</span>
+    <span class="post-tag">Business</span>
+    <a href="#" class="read-more">Read more →</a>
+  </article>
+
+  <article class="post-card">
+    <div class="post-date">June 2026</div>
+    <h2>Building a Music Business Knowledge Base That Actually Compounds</h2>
+    <p class="excerpt">Why we built the ROSTR framework into Artispreneur OS — so your agents don't forget what they learned last session and actually improve over time.</p>
+    <span class="post-tag">Engineering</span>
+    <span class="post-tag">ROSTR</span>
+    <a href="#" class="read-more">Read more →</a>
+  </article>
+
+  <article class="post-card">
+    <div class="post-date">May 2026</div>
+    <h2>The Playlist Economy: How Independent Artists Get Heard in 2026</h2>
+    <p class="excerpt">Collaborative playlists, algorithmic discovery, and why having an AI Distribution Agent that never stops submitting might be the edge you need.</p>
+    <span class="post-tag">Streaming</span>
+    <span class="post-tag">Marketing</span>
+    <a href="#" class="read-more">Read more →</a>
+  </article>
+
+  <div class="cta">
+    <p>More articles coming soon. <a href="contact.html">Get notified</a> when we publish.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container"><p>© 2026 Artispreneur · Art Means Business</p></div>
+</footer>
+</body>
+</html>

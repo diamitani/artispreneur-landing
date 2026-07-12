@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Artispreneur</title>
+<meta name="description" content="Artispreneur privacy policy. How we handle your data, API keys, and agent interactions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--max-w:750px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.7}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;background:rgba(9,9,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.nav-logo .accent{color:var(--gold)}
+main{padding-top:100px;padding-bottom:80px}
+h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;margin-bottom:8px}
+.last-updated{font-size:13px;color:var(--text-dim);margin-bottom:32px}
+h2{font-size:20px;font-weight:700;margin-top:40px;margin-bottom:12px}
+p{font-size:14px;color:var(--text-muted);margin-bottom:12px;line-height:1.7}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 32px;text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+  </div>
+</nav>
+
+<main class="container">
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: July 2026</p>
+
+  <h2>1. Information We Collect</h2>
+  <p>When you create an Artispreneur account, we collect your name, email address, and any profile information you provide. If you connect Google Drive, we access only the Artispreneur folder you authorize. If you use the BYOK feature, your API keys are encrypted at rest and never shared.</p>
+
+  <h2>2. Agent Data</h2>
+  <p>Your agent's state — including <code>soul.md</code>, session memory, decisions, and learnings — is stored in an isolated per-user workspace. No agent data is shared across users. Agent interactions are logged for debugging and improvement purposes.</p>
+
+  <h2>3. LLM Providers</h2>
+  <p>When using the Free tier, your agent prompts are sent to Google's Gemini API via our provisioned credits. When using BYOK, prompts route directly to your chosen provider using your key — we do not intermediate or log those requests beyond basic usage tracking.</p>
+
+  <h2>4. Signal / Wire Messaging</h2>
+  <p>If you connect Signal or Wire messaging, messages are end-to-end encrypted via those platforms' native protocols. The bridge service decrypts messages only to route them to your agent instance.</p>
+
+  <h2>5. Data Retention</h2>
+  <p>Your workspace data is retained as long as your account is active. You can request deletion at any time by contacting us. Deletion removes your agent state, outputs, and workspace files.</p>
+
+  <h2>6. Third-Party Services</h2>
+  <p>Artispreneur integrates with third-party services including but not limited to: Google (for Gemini API and Drive), Vercel (for hosting), Supabase (for authentication and database), and Signal/Wire (for messaging). Each service has its own privacy policy.</p>
+
+  <h2>7. Contact</h2>
+  <p>Questions about this policy? <a href="contact.html">Get in touch</a>.</p>
+</main>
+
+<footer>
+  <div class="container"><p>© 2026 Artispreneur · Art Means Business</p></div>
+</footer>
+</body>
+</html>

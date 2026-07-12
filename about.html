@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Artispreneur</title>
+<meta name="description" content="Artispreneur helps artists become entrepreneurs with AI agents, tools, and education.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--max-w:1100px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.7}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;background:rgba(9,9,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.nav-logo .accent{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text-muted);font-size:13px;font-weight:500}
+.nav-links a:hover{color:var(--text)}
+.nav-back{color:var(--text-muted);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--gold)}
+main{padding-top:100px;padding-bottom:80px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:24px}
+.page-title span{color:var(--gold)}
+.lead{font-size:19px;color:var(--text-muted);max-width:700px;line-height:1.7;margin-bottom:48px}
+.section-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;margin-bottom:20px}
+.section{margin-bottom:64px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px}
+.card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.card p{font-size:14px;color:var(--text-muted);line-height:1.7}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pillar-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;background:var(--gold-muted);color:var(--gold)}
+.ecosystem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.eco-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;transition:all .2s}
+.eco-card:hover{border-color:var(--gold);background:var(--card)}
+.eco-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.eco-card p{font-size:12px;color:var(--text-dim)}
+.eco-card .url{font-size:11px;color:var(--text-dim);margin-top:8px;font-family:monospace}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;margin-bottom:8px}
+.badge-live{background:rgba(34,197,94,0.15);color:var(--green)}
+.badge-soon{background:rgba(234,179,8,0.15);color:#eab308}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+.stat{text-align:center;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.stat .num{font-size:28px;font-weight:800;color:var(--gold)}
+.stat .label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 32px;text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+@media(max-width:768px){.grid-2,.grid-3,.ecosystem-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+    <div class="nav-links">
+      <a href="index.html#agents">Agents</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="academy.html">Academy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Art <span>Means</span> Business</h1>
+  <p class="lead">We're building the operating system for the independent music industry. Our mission is to give every artist the tools, knowledge, and AI-powered workforce that major labels provide — without the label deal.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">6</div><div class="label">AI Agents</div></div>
+    <div class="stat"><div class="num">17</div><div class="label">Free Courses</div></div>
+    <div class="stat"><div class="num">183</div><div class="label">Industry Contacts</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">Live Sites</div></div>
+  </div>
+
+  <div class="section" style="margin-top:48px">
+    <h2 class="section-title">What We Believe</h2>
+    <div class="grid-3">
+      <div class="card">
+        <div class="pillar-icon">◎</div>
+        <h3>Artists Are Entrepreneurs</h3>
+        <p>Every independent musician is a small business owner. We provide the infrastructure, education, and automation to run that business professionally.</p>
+      </div>
+      <div class="card">
+        <div class="pillar-icon">⎈</div>
+        <h3>AI Should Be Accessible</h3>
+        <p>Agentic AI isn't just for tech companies. We make it available through a free tier with Gemini credits or BYOK with any provider.</p>
+      </div>
+      <div class="card">
+        <div class="pillar-icon">⚡</div>
+        <h3>Knowledge Compounds</h3>
+        <p>ROSTR framework ensures your agents learn from every interaction. Your workspace gets smarter the longer you use it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">The Ecosystem</h2>
+    <p class="lead" style="font-size:16px;margin-bottom:24px">Three live sites + one master workspace, unified under a single design system.</p>
+    <div class="ecosystem-grid">
+      <a href="index.html" class="eco-card">
+        <span class="badge badge-live">Live</span>
+        <h4>Landing</h4>
+        <p>Marketing homepage — agents, tools, pricing, and ecosystem overview</p>
+        <span class="url">artispreneur-landing.vercel.app</span>
+      </a>
+      <a href="https://academy-build.vercel.app" class="eco-card">
+        <span class="badge badge-live">Live</span>
+        <h4>Academy</h4>
+        <p>17 courses · 100+ lessons · YouTube &amp; HeyGen video modules</p>
+        <span class="url">academy-build.vercel.app</span>
+      </a>
+      <a href="https://directory-build.vercel.app" class="eco-card">
+        <span class="badge badge-live">Live</span>
+        <h4>Directory</h4>
+        <p>183 contacts · Venues, Radio, Blogs, Press, Podcasts, Community</p>
+        <span class="url">directory-build.vercel.app</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Technology</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Hermes Agent (Nous Research)</h3>
+        <p>Production-grade AI agent infrastructure with persistent memory, sub-agent delegation, and multi-tool orchestration — giving each user a personalized AI workforce.</p>
+      </div>
+      <div class="card">
+        <h3>ROSTR Framework</h3>
+        <p>PAL intent compilation + NPAO phase-aware orchestration + RAG knowledge retrieval. Your agent maintains state across sessions and gets smarter over time.</p>
+      </div>
+      <div class="card">
+        <h3>Open-Source Messaging</h3>
+        <p>Signal and Wire integration means you can command your agents from any device with end-to-end encryption. Your music business in your pocket.</p>
+      </div>
+      <div class="card">
+        <h3>BYOK Architecture</h3>
+        <p>Bring your own OpenAI, Anthropic, Groq, or Ollama key. Or get started immediately with included Gemini free credits. No lock-in.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Artispreneur · Art Means Business · Chicago, IL</p>
+  </div>
+</footer>
+</body>
+</html>

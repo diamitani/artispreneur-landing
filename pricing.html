@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Artispreneur</title>
+<meta name="description" content="Start free with Gemini credits, bring your own API key, or go Pro. Artispreneur pricing plans for independent musicians.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--max-w:1100px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.7}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;background:rgba(9,9,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.nav-logo .accent{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text-muted);font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+main{padding-top:100px;padding-bottom:80px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:900;text-align:center;margin-bottom:8px}
+.page-sub{text-align:center;font-size:16px;color:var(--text-muted);margin-bottom:48px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;max-width:1000px;margin:0 auto}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px 32px;position:relative;transition:all .2s}
+.price-card:hover{border-color:var(--border-light)}
+.price-card.featured{border-color:var(--gold);background:var(--card);box-shadow:0 0 40px rgba(201,162,39,0.08)}
+.price-card.featured::before{content:'Most Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);font-size:11px;font-weight:700;padding:4px 14px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
+.price-card h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.price-card .price{font-size:44px;font-weight:800;margin:16px 0 4px;letter-spacing:-2px}
+.price-card .price.free-card{color:var(--gold)}
+.price-card .price.byok{color:var(--gold)}
+.price-card .price span{font-size:14px;color:var(--text-muted);font-weight:400;letter-spacing:0}
+.price-card .price-desc{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.6}
+.price-features{list-style:none;margin-bottom:32px}
+.price-features li{font-size:13px;padding:7px 0;color:var(--text-muted);display:flex;align-items:start;gap:10px;line-height:1.4}
+.price-features li::before{content:'\2713';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.price-btn{display:block;width:100%;padding:12px;border-radius:8px;font-weight:700;font-size:14px;text-align:center;transition:all .2s;cursor:pointer;border:none}
+.price-btn-gold{background:var(--gold);color:var(--black)}
+.price-btn-gold:hover{background:var(--gold-light)}
+.price-btn-outline{background:transparent;border:1px solid var(--border-light);color:var(--text)}
+.price-btn-outline:hover{border-color:var(--text-dim);background:var(--card)}
+.faq-section{margin-top:80px;max-width:700px;margin-left:auto;margin-right:auto}
+.faq-section h2{font-family:'Playfair Display',serif;font-size:28px;text-align:center;margin-bottom:32px}
+.faq-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.faq-item h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.faq-item p{font-size:14px;color:var(--text-muted);line-height:1.6}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 32px;text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+@media(max-width:768px){.pricing-grid{grid-template-columns:1fr;max-width:400px}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+    <div class="nav-links">
+      <a href="index.html#agents">Agents</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="academy.html">Academy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Simple, Transparent Pricing</h1>
+  <p class="page-sub">Start free. Scale when you're ready. No credit card required.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price free-card">$0<span> /forever</span></div>
+      <p class="price-desc">Sign up with Gemini Flash free credits. All agents, all tools, no strings.</p>
+      <ul class="price-features">
+        <li>All 6 AI agents available</li>
+        <li>Gemini Flash API credits included</li>
+        <li>Prompt Library — full access</li>
+        <li>Academy — 17 free courses</li>
+        <li>Contact Directory — 183 contacts</li>
+        <li>1,000 agent messages/month</li>
+        <li>50 outputs/month</li>
+        <li>Community support</li>
+      </ul>
+      <a href="contact.html" class="price-btn price-btn-outline">Get Started</a>
+    </div>
+
+    <div class="price-card featured">
+      <h3>BYOK (Bring Your Key)</h3>
+      <div class="price byok">$0<span> + your API costs</span></div>
+      <p class="price-desc">Connect your own LLM key. Unlimited usage. Full workspace with all integrations.</p>
+      <ul class="price-features">
+        <li>Everything in Free</li>
+        <li>Unlimited agent messages</li>
+        <li>Unlimited outputs</li>
+        <li>Google Drive sync &amp; auto-save</li>
+        <li>Skills Marketplace — full access</li>
+        <li>Signal / Wire messaging integration</li>
+        <li>Any LLM provider (OpenAI, Anthropic, Groq, Ollama)</li>
+        <li>Priority agent response</li>
+      </ul>
+      <a href="contact.html" class="price-btn price-btn-gold">Start with BYOK</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Pro</h3>
+      <div class="price">$29<span> /month</span></div>
+      <p class="price-desc">Full platform with managed AI compute. For artists building empires.</p>
+      <ul class="price-features">
+        <li>Everything in BYOK</li>
+        <li>Managed LLM compute included</li>
+        <li>Advanced analytics dashboard</li>
+        <li>Priority support (24h response)</li>
+        <li>Custom agent creation</li>
+        <li>API access for integrations</li>
+        <li>Team collaboration (up to 5 seats)</li>
+        <li>Early access to new features</li>
+      </ul>
+      <a href="contact.html" class="price-btn price-btn-outline">Go Pro</a>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h4>What are Gemini API free credits?</h4>
+      <p>Google offers free API credits for Gemini Flash through AI Studio. We provision these so you can start using agents immediately with zero cost. No credit card, no expiration trickery.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What providers work with BYOK?</h4>
+      <p>OpenAI (GPT-4o, o3-mini), Anthropic (Claude Sonnet/Opus), Groq (Llama 3.3 70B), OpenRouter (any model), and Ollama (local models). You control your API key and usage.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I switch plans later?</h4>
+      <p>Yes. Start on Free, connect your own key when you're ready, or upgrade to Pro for managed compute. No migration — your workspace and agent state persist.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What does "managed LLM compute" mean in Pro?</h4>
+      <p>We handle the API keys, rate limits, and model selection so you don't have to. You just use the agents — we make sure the AI is always available behind the scenes.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container"><p>© 2026 Artispreneur · Art Means Business</p></div>
+</footer>
+</body>
+</html>

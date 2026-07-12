@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Artispreneur</title>
+<meta name="description" content="Get in touch with Artispreneur. Contact form, directory access, and ecosystem links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--max-w:1100px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.7}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;background:rgba(9,9,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.nav-logo .accent{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text-muted);font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links .active{color:var(--gold)}
+main{padding-top:100px;padding-bottom:80px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:900;text-align:center;margin-bottom:8px}
+.page-sub{text-align:center;font-size:16px;color:var(--text-muted);margin-bottom:48px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:900px;margin:0 auto 60px}
+.contact-form{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px}
+.contact-form h2{font-size:22px;font-weight:700;margin-bottom:20px}
+.contact-info h2{font-size:22px;font-weight:700;margin-bottom:20px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted)}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;background:var(--black);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;resize:vertical}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+.form-group textarea{min-height:120px}
+.submit-btn{background:var(--gold);color:var(--black);padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;border:none;cursor:pointer;transition:all .2s}
+.submit-btn:hover{background:var(--gold-light)}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+.info-card h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.info-card p{font-size:14px;color:var(--text-muted)}
+.info-card .link{display:inline-block;margin-top:8px;font-size:13px;font-weight:600}
+.directory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;margin:60px auto 0}
+.dir-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;transition:all .2s;text-align:center}
+.dir-card:hover{border-color:var(--gold);background:var(--card)}
+.dir-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.dir-card p{font-size:12px;color:var(--text-dim)}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 32px;text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+@media(max-width:768px){.grid-2,.directory-grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+    <div class="nav-links">
+      <a href="index.html#agents">Agents</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="academy.html">Academy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Get in Touch</h1>
+  <p class="page-sub">Questions about Artispreneur? Want early access? Let us know.</p>
+
+  <div class="grid-2">
+    <div class="contact-form">
+      <h2>Send a Message</h2>
+      <form onsubmit="alert('Thanks! We'll get back to you.');return false">
+        <div class="form-group"><label>Name</label><input type="text" required placeholder="Your name"></div>
+        <div class="form-group"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="form-group"><label>What are you interested in?</label>
+          <select style="width:100%;padding:10px 14px;background:var(--black);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif">
+            <option>Agents & Workspace</option>
+            <option>Academy Courses</option>
+            <option>Industry Directory</option>
+            <option>Contract Templates</option>
+            <option>Pricing / BYOK</option>
+            <option>Partnerships</option>
+            <option>Something Else</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea required placeholder="Tell us what you're working on..."></textarea></div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+    <div class="contact-info">
+      <h2>Connect</h2>
+      <div class="info-card">
+        <h4>📧 Email</h4>
+        <p>hello@artispreneur.com</p>
+      </div>
+      <div class="info-card">
+        <h4>📍 Location</h4>
+        <p>Chicago, IL · 48th Ward</p>
+      </div>
+      <div class="info-card">
+        <h4>🔗 Ecosystem</h4>
+        <p>Landing, Academy, Directory — unified design system</p>
+        <a href="index.html" class="link">Landing Page →</a>
+        <a href="https://academy-build.vercel.app" class="link" style="margin-left:12px">Full Academy →</a>
+        <a href="https://directory-build.vercel.app" class="link" style="margin-left:12px">Directory →</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:12px">
+    <div class="section-label" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:12px">Industry Directory</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:800;margin-bottom:8px">183 Contacts. 6 Categories.</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:32px">Browse or search the full directory with venues, radio, blogs, press, podcasts, and community resources.</p>
+  </div>
+  <div class="directory-grid">
+    <a href="https://directory-build.vercel.app/category/venues" class="dir-card">
+      <h4>🎤 Venues & Live Music</h4>
+      <p>45 contacts · Chicago + National</p>
+    </a>
+    <a href="https://directory-build.vercel.app/category/radio" class="dir-card">
+      <h4>📻 Radio Stations</h4>
+      <p>40 contacts · IL, CA, NY, TN, TX, Online</p>
+    </a>
+    <a href="https://directory-build.vercel.app/category/blogs" class="dir-card">
+      <h4>📝 Music Blogs</h4>
+      <p>35 contacts · Major, Genre, Networks</p>
+    </a>
+    <a href="https://directory-build.vercel.app/category/press" class="dir-card">
+      <h4>📰 Press & Media</h4>
+      <p>25 contacts · National, Chicago</p>
+    </a>
+    <a href="https://directory-build.vercel.app/category/podcasts" class="dir-card">
+      <h4>🎙 Music Podcasts</h4>
+      <p>20 contacts · Industry, Songwriting, Discovery</p>
+    </a>
+    <a href="https://directory-build.vercel.app/category/community" class="dir-card">
+      <h4>🏛 Community & Government</h4>
+      <p>18 contacts · Arts Orgs, Grants, 48th Ward</p>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div class="container"><p>© 2026 Artispreneur · Art Means Business · Chicago, IL</p></div>
+</footer>
+</body>
+</html>
