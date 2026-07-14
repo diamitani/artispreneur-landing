@@ -80,7 +80,7 @@ footer p{font-size:13px;color:var(--text-dim)}
 
 <main class="container">
   <h1 class="page-title">Academy</h1>
-  <p class="page-sub">8 courses with full lesson breakdowns + 9 more on the Academy site. Filter by category.</p>
+  <p class="page-sub">16 courses · 307 modules · Full lesson breakdowns from the Academy curriculum. Filter by category.</p>
   <p class="breadcrumb"><a href="index.html">Home</a> / Academy · Also available: <a href="https://academy-build.vercel.app">Full Academy Site</a></p>
 
   <div class="category-bar" id="categoryBar">
@@ -98,23 +98,22 @@ footer p{font-size:13px;color:var(--text-dim)}
   <div class="courses-grid" id="coursesGrid">
 <script>
 const courses = [
-  {title:"How to Brand Yourself as an Artist",category:"Branding",desc:"Learn how to create a compelling personal brand that sets you apart in the music industry. Build your visual identity, messaging, and online presence.",lessons:7,url:"courses/brand-yourself-as-artist.html"},
-  {title:"How to Add Music to Collaborative Playlist",category:"Streaming",desc:"Master the art of getting your music featured on collaborative playlists. Learn outreach strategies and playlist pitching techniques.",lessons:7,url:"courses/add-music-collaborative-playlist.html"},
-  {title:"How to Add Songs to Your PRO",category:"Royalties",desc:"Step-by-step guide to registering your songs with your Performance Rights Organization to collect royalties.",lessons:7,url:"courses/add-songs-to-pro.html"},
-  {title:"How to Promote Your Own Shows",category:"Marketing",desc:"Discover proven strategies for promoting your live shows, increasing attendance, and building a loyal fanbase.",lessons:7,url:"courses/promote-your-shows.html"},
-  {title:"How to Copyright Your Music",category:"Legal",desc:"Protect your creative works by learning how to properly copyright your music and understand your rights as a creator.",lessons:7,url:"courses/copyright-your-music.html"},
-  {title:"How to Create a Music Catalogue",category:"Business",desc:"Build and organize your music catalogue for licensing opportunities and professional industry management.",lessons:8,url:"courses/create-music-catalogue.html"},
-  {title:"How to Distribute Your Music",category:"Distribution",desc:"Learn how to distribute your music to all major streaming platforms and digital stores worldwide.",lessons:7,url:"courses/distribute-your-music.html"},
-  {title:"How to File Business Taxes",category:"Finance",desc:"Navigate the complexities of filing taxes as a music business owner. Stay compliant and maximize deductions.",lessons:7,url:"courses/file-business-taxes.html"},
-  {title:"How to Setup a Business Bank Account",category:"Finance",desc:"Separate your personal and business finances by setting up a proper business bank account for your music career.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Setup an LLC",category:"Legal",desc:"Protect your personal assets and establish credibility by forming an LLC for your music business.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Setup a CRM",category:"Business",desc:"Organize your industry contacts and fan relationships with a Customer Relationship Management system.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Submit Music to Blogs & Playlists",category:"Marketing",desc:"Learn effective strategies for pitching your music to music blogs and playlist curators for maximum exposure.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to License Your Music",category:"Licensing",desc:"Unlock additional revenue streams by learning how to license your music for TV, film, commercials, and games.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Register an E.I.N",category:"Legal",desc:"Get your Employer Identification Number to operate your music business officially and access business banking.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Register with a P.R.O",category:"Royalties",desc:"Register with a Performance Rights Organization to collect performance royalties from radio, venues, and streaming.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Network in the Music Industry",category:"Business",desc:"Build meaningful relationships in the music industry. Learn networking strategies that lead to real opportunities.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
-  {title:"How to Trademark Your Music",category:"Legal",desc:"Protect your artist name, logos, and brand identity through trademark registration.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Brand Yourself as an Artist",category:"Branding",desc:"Build a compelling personal brand that sets you apart. Visual identity, messaging, and online presence.",lessons:18,url:"courses/brand-yourself-as-artist.html"},
+  {title:"How to Add Music to Collaborative Playlist",category:"Streaming",desc:"Master playlist features, curation strategies, and pitching techniques to grow your audience.",lessons:14,url:"courses/add-music-collaborative-playlist.html"},
+  {title:"How to Add Songs to Your PRO",category:"Royalties",desc:"Register your songs to collect performance royalties from radio, venues, and streaming.",lessons:20,url:"courses/add-songs-to-pro.html"},
+  {title:"How to Book and Promote Your Own Shows",category:"Marketing",desc:"Book venues, promote events, and build your fanbase through live performances.",lessons:16,url:"courses/promote-your-shows.html"},
+  {title:"How to Copyright Your Music",category:"Legal",desc:"Protect your creative works. Registration, enforcement, DMCA, and international protection.",lessons:19,url:"courses/copyright-your-music.html"},
+  {title:"How to Create a Music Catalogue",category:"Business",desc:"Organize, categorize, and share your catalogue for licensing and professional opportunities.",lessons:16,url:"courses/create-music-catalogue.html"},
+  {title:"How to Distribute Your Music",category:"Distribution",desc:"Compare DSPs, upload your music, maximize streaming revenue across all platforms.",lessons:21,url:"courses/distribute-your-music.html"},
+  {title:"How to File Business Taxes",category:"Finance",desc:"Navigate taxes as a music business owner. Deductions, forms, quarterly estimates.",lessons:23,url:"courses/file-business-taxes.html"},
+  {title:"How to Set Up a Business Bank Account",category:"Finance",desc:"Separate personal and business finances. Choose a bank, open accounts, manage cash flow.",lessons:20,url:"courses/setup-business-bank-account.html"},
+  {title:"How to Set Up an LLC",category:"Legal",desc:"Form an LLC to protect assets and build credibility. Operating agreements, compliance.",lessons:20,url:"courses/setup-llc.html"},
+  {title:"How to Set Up a CRM",category:"Business",desc:"Organize industry contacts and fan relationships with a Customer Relationship Management system.",lessons:20,url:"courses/setup-crm.html"},
+  {title:"How to Submit Music to Blogs & Playlists",category:"Marketing",desc:"Research outlets, craft pitches, and get featured on music blogs and playlist curators.",lessons:23,url:"courses/submit-music-blogs-playlists.html"},
+  {title:"How to License Your Music",category:"Licensing",desc:"Unlock revenue through TV, film, commercials, and game licensing. Sync strategies.",lessons:21,url:"courses/license-your-music.html"},
+  {title:"How to Register an E.I.N.",category:"Legal",desc:"Get your Employer Identification Number to operate officially and access business banking.",lessons:20,url:"courses/register-ein.html"},
+  {title:"How to Register with a P.R.O.",category:"Royalties",desc:"Sign up with ASCAP, BMI, or SESAC. Register songs, claim royalties, manage your catalog.",lessons:17,url:"courses/register-with-pro.html"},
+  {title:"How to Trademark Your Music",category:"Legal",desc:"Protect your artist name, logos, and brand identity through trademark registration.",lessons:19,url:"courses/trademark-your-music.html"},
 ];
 
 const catClass = {Business:'cat-business',Branding:'cat-branding',Streaming:'cat-streaming',Royalties:'cat-royalties',Marketing:'cat-marketing',Legal:'cat-legal',Distribution:'cat-distribution',Licensing:'cat-licensing',Finance:'cat-finance'};
