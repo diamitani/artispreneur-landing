@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workspace — Artispreneur OS</title>
+<meta name="description" content="Artispreneur OS agentic workspace — manage your 6 AI agents, outputs, projects, and music business from one dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--green:#22c55e;--green-muted:rgba(34,197,94,0.12);--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--orange:#f97316;--cyan:#06b6d2;--radius:8px;--radius-lg:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--black-light);border-right:1px solid var(--border);padding:20px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:240px;z-index:100;overflow-y:auto}
+.sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.sidebar-logo img{height:22px}
+.sidebar-section{padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim)}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 16px;margin:1px 8px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .12s;cursor:pointer}
+.sidebar-item:hover{background:var(--surface);color:var(--text)}
+.sidebar-item.active{background:var(--gold-muted);color:var(--gold)}
+.sidebar-item .badge{font-size:10px;padding:1px 6px;border-radius:100px;margin-left:auto;background:var(--surface);color:var(--text-dim)}
+.sidebar-item .badge.live{background:var(--green-muted);color:var(--green)}
+.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
+.sidebar-user{display:flex;align-items:center;gap:10px}
+.sidebar-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-muted);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.sidebar-user .name{font-size:13px;font-weight:600}
+.sidebar-user .plan{font-size:10px;color:var(--gold)}
+.main{margin-left:240px;padding:28px 32px;max-width:1200px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.topbar h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;letter-spacing:-.5px}
+.topbar-actions{display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--gold);color:var(--black)}
+.btn-primary:hover{background:var(--gold-light)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}
+.btn-outline:hover{border-color:var(--border-light);color:var(--text);background:var(--surface)}
+
+.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:all .2s;position:relative}
+.agent-card:hover{border-color:var(--border-light)}
+.agent-card .agent-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.agent-card .agent-name{font-size:15px;font-weight:700}
+.agent-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
+.agent-status.active{background:var(--green-muted);color:var(--green)}
+.agent-status.idle{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
+.agent-status.running{background:rgba(59,130,246,0.12);color:var(--blue)}
+.agent-card .agent-last{font-size:11px;color:var(--text-dim);line-height:1.5}
+.agent-card .agent-actions{display:flex;gap:8px;margin-top:14px}
+.agent-btn{font-size:11px;padding:5px 12px;border-radius:5px;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
+.agent-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+.quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px}
+.stat-icon{font-size:24px;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon.gold{background:var(--gold-muted);color:var(--gold)}
+.stat-icon.green{background:var(--green-muted);color:var(--green)}
+.stat-icon.blue{background:rgba(59,130,246,0.12);color:var(--blue)}
+.stat-icon.purple{background:rgba(168,85,247,0.12);color:var(--purple)}
+.stat-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.stat-label{font-size:11px;color:var(--text-dim)}
+
+.panels{display:grid;grid-template-columns:1.5fr 1fr;gap:24px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.panel-header h3{font-size:14px;font-weight:700}
+.panel-header .link{font-size:11px;color:var(--text-dim);transition:color .12s}
+.panel-header .link:hover{color:var(--gold)}
+.panel-body{padding:16px 20px}
+.output-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.output-item:last-child{border-bottom:none}
+.output-item .file-icon{font-size:18px;margin-right:10px}
+.output-item .file-info{flex:1}
+.output-item .file-name{font-size:13px;font-weight:600}
+.output-item .file-meta{font-size:11px;color:var(--text-dim);margin-top:2px}
+.output-item .file-badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600}
+.file-badge.draft{background:rgba(168,85,247,0.12);color:var(--purple)}
+.file-badge.final{background:var(--green-muted);color:var(--green)}
+
+.activity-item{padding:12px 0;border-bottom:1px solid var(--border);font-size:12px}
+.activity-item:last-child{border-bottom:none}
+.activity-item .act-time{font-size:10px;color:var(--text-dim);margin-bottom:2px}
+.activity-item .act-text{color:var(--text-muted);line-height:1.4}
+.activity-item .act-agent{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-right:4px}
+.act-agent.pro{background:var(--gold-muted);color:var(--gold)}
+.act-agent.dist{background:var(--green-muted);color:var(--green)}
+.act-agent.legal{background:rgba(59,130,246,0.12);color:var(--blue)}
+.act-agent.finance{background:rgba(6,182,212,0.12);color:var(--cyan)}
+
+.soul-preview{background:var(--black);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);line-height:1.6;white-space:pre-wrap;max-height:200px;overflow-y:auto}
+
+.footer-nav{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim)}
+.footer-nav a{color:var(--text-dim)}
+.footer-nav a:hover{color:var(--gold)}
+
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{margin-left:0}.agent-grid{grid-template-columns:1fr 1fr}.quick-stats{grid-template-columns:1fr 1fr}.panels{grid-template-columns:1fr}}
+@media(max-width:640px){.agent-grid,.quick-stats{grid-template-columns:1fr}.main{padding:16px}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html"><img src="logo.png" alt="Artispreneur"></a>
+    </div>
+    <div class="sidebar-section">Main</div>
+    <a href="workspace.html" class="sidebar-item active">⌂ Dashboard</a>
+    <a href="workspace.html#agents" class="sidebar-item">◈ Agents <span class="badge live">4 active</span></a>
+    <a href="workspace.html#outputs" class="sidebar-item">📁 Outputs <span class="badge">12</span></a>
+    <a href="workspace.html#projects" class="sidebar-item">◎ Projects</a>
+
+    <div class="sidebar-section" style="margin-top:8px">Tools</div>
+    <a href="#" class="sidebar-item">✦ Prompt Library</a>
+    <a href="#" class="sidebar-item">⚙ Skills Market</a>
+    <a href="directory.html" class="sidebar-item">◉ Directory</a>
+
+    <div class="sidebar-section" style="margin-top:8px">Learn</div>
+    <a href="academy.html" class="sidebar-item">🎓 Academy</a>
+    <a href="blog.html" class="sidebar-item">📰 Blog</a>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div>
+          <div class="name">Artist Name</div>
+          <div class="plan">Free Plan · BYOK</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="topbar">
+      <h1>Dashboard</h1>
+      <div class="topbar-actions">
+        <a href="pricing.html" class="btn btn-outline">Upgrade Plan</a>
+        <button class="btn btn-primary" onclick="alert('🎵 New agent task queued. Agents will respond shortly.')">+ New Task</button>
+      </div>
+    </div>
+
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-icon gold">◈</div>
+        <div>
+          <div class="stat-value">4/6</div>
+          <div class="stat-label">Agents Active</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">✓</div>
+        <div>
+          <div class="stat-value">23</div>
+          <div class="stat-label">Actions This Month</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue">📁</div>
+        <div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Output Files</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">◎</div>
+        <div>
+          <div class="stat-value">3</div>
+          <div class="stat-label">Active Projects</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-grid" id="agents">
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">♩ PRO Agent</span>
+          <span class="agent-status active">Active</span>
+        </div>
+        <div class="agent-last">📋 Registered 2 songs with BMI this week<br>📋 Catalog: 14 works · $1,240 royalties YTD</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('PRO Agent: Registering new song…')">Register Song</button>
+          <button class="agent-btn" onclick="alert('PRO Agent: Generating splitsheet…')">Splitsheet</button>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">↗ Distribution Agent</span>
+          <span class="agent-status active">Active</span>
+        </div>
+        <div class="agent-last">🎧 Submitted to 8 playlists this week<br>📊 New single on Spotify, Apple Music, TIDAL</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('Distribution: Searching for playlist opportunities…')">Find Playlists</button>
+          <button class="agent-btn" onclick="alert('Distribution: Analyzing streaming stats…')">Stats</button>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">⚡ Licensing Agent</span>
+          <span class="agent-status idle">Idle</span>
+        </div>
+        <div class="agent-last">🎬 3 music libraries contacted<br>⏳ Awaiting response from 2 supervisors</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('Licensing: Finding sync opportunities…')">Find Sync</button>
+          <button class="agent-btn" onclick="alert('Licensing: Creating pitch template…')">Pitch</button>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">§ Legal Agent</span>
+          <span class="agent-status running">Running</span>
+        </div>
+        <div class="agent-last">⚙ Generating Operating Agreement draft…<br>📄 LLC formed in IL · EIN registered</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('Legal: Generating contract…')">Contract</button>
+          <button class="agent-btn" onclick="alert('Legal: Reviewing terms…')">Review</button>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">$ Finance Agent</span>
+          <span class="agent-status active">Active</span>
+        </div>
+        <div class="agent-last">💰 Revenue: $4,230 this quarter<br>📊 Tax estimate: Q3 payment due Oct 15</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('Finance: Running analysis…')">Analysis</button>
+          <button class="agent-btn" onclick="alert('Finance: Preparing tax summary…')">Tax</button>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">◎ Manager Agent</span>
+          <span class="agent-status active">Active</span>
+        </div>
+        <div class="agent-last">📅 Next: EPK review meeting (Wed)<br>🗺 Roadmap updated: Q3 release strategy</div>
+        <div class="agent-actions">
+          <button class="agent-btn" onclick="alert('Manager: Drafting business plan…')">Plan</button>
+          <button class="agent-btn" onclick="alert('Manager: Scheduling…')">Schedule</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panels">
+      <div class="panel" id="outputs">
+        <div class="panel-header">
+          <h3>Recent Outputs</h3>
+          <a href="#" class="link">View All →</a>
+        </div>
+        <div class="panel-body">
+          <div class="output-item">
+            <span class="file-icon">📄</span>
+            <div class="file-info">
+              <div class="file-name">LLC_Operating_Agreement_v2.pdf</div>
+              <div class="file-meta">Legal Agent · 2 days ago · 8 pages</div>
+            </div>
+            <span class="file-badge final">Final</span>
+          </div>
+          <div class="output-item">
+            <span class="file-icon">🎵</span>
+            <div class="file-info">
+              <div class="file-name">Midnight_EP_Metadata_Export.xlsx</div>
+              <div class="file-meta">PRO Agent · 3 days ago · ISRCs: 6 tracks</div>
+            </div>
+            <span class="file-badge final">Final</span>
+          </div>
+          <div class="output-item">
+            <span class="file-icon">📊</span>
+            <div class="file-info">
+              <div class="file-name">Q2_Streaming_Royalty_Analysis.pdf</div>
+              <div class="file-meta">Finance Agent · 5 days ago · 12 pages</div>
+            </div>
+            <span class="file-badge final">Final</span>
+          </div>
+          <div class="output-item">
+            <span class="file-icon">📝</span>
+            <div class="file-info">
+              <div class="file-name">Sync_License_Pitch_Draft_v3.docx</div>
+              <div class="file-meta">Licensing Agent · 6 days ago</div>
+            </div>
+            <span class="file-badge draft">Draft</span>
+          </div>
+          <div class="output-item">
+            <span class="file-icon">📋</span>
+            <div class="file-info">
+              <div class="file-name">Q3_Release_Strategy_Roadmap.md</div>
+              <div class="file-meta">Manager Agent · 1 week ago</div>
+            </div>
+            <span class="file-badge final">Final</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Recent Activity</h3>
+          <a href="#" class="link">Full Log →</a>
+        </div>
+        <div class="panel-body">
+          <div class="activity-item">
+            <div class="act-time">Today · 2 hours ago</div>
+            <div class="act-text"><span class="act-agent pro">PRO</span> Registered "Midnight" with BMI. ISWC assigned.</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-time">Today · 4 hours ago</div>
+            <div class="act-text"><span class="act-agent dist">Dist</span> Submitted "Midnight" to 3 Spotify playlists.</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-time">Yesterday · 11:30 AM</div>
+            <div class="act-text"><span class="act-agent legal">Legal</span> Generated LLC Operating Agreement v2.</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-time">Yesterday · 9:15 AM</div>
+            <div class="act-text"><span class="act-agent finance">Finance</span> Completed Q2 revenue analysis. $4,230 total.</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-time">Jul 10 · 3:00 PM</div>
+            <div class="act-text"><span class="act-agent pro">PRO</span> Extracted metadata from 6 new EP tracks.</div>
+          </div>
+          <div class="activity-item" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+            <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">soul.md Preview</div>
+            <div class="soul-preview"># Artist: Midnight
+# Genre: Alternative R&B
+# Current Projects:
+# - EP: "Midnight in the Garden" (due Aug 2026)
+# - Single: "Gold Hour" (release strategy active)
+# Business Entity: Midnight Music LLC (IL)
+# PRO: BMI (IPI#: 0123456789)
+# Distributor: UnitedMasters
+# Goals: 100K streams, first sync placement, tour Q4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer-nav">
+      <span>Artispreneur OS v0.1 · Hermes Agent + ROSTR Framework</span>
+      <span><a href="index.html">← Back to Site</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a> &nbsp;|&nbsp; <a href="terms.html">Terms</a></span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
