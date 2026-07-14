@@ -64,13 +64,14 @@ footer p{font-size:13px;color:var(--text-dim)}
 <body>
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="index.html" class="nav-logo">Artis<span class="accent">preneur</span></a>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Artispreneur" style="height:28px;display:block"></a>
     <div class="nav-links">
       <a href="index.html#agents">Agents</a>
       <a href="index.html#tools">Tools</a>
       <a href="index.html#how">How It Works</a>
       <a href="pricing.html">Pricing</a>
       <a href="academy.html" class="active">Academy</a>
+      <a href="directory.html">Directory</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -97,23 +98,23 @@ footer p{font-size:13px;color:var(--text-dim)}
   <div class="courses-grid" id="coursesGrid">
 <script>
 const courses = [
-  {title:"How to Brand Yourself as an Artist",category:"Branding",desc:"Learn how to create a compelling personal brand that sets you apart in the music industry. Build your visual identity, messaging, and online presence.",lessons:7,url:"https://academy-build.vercel.app/courses/brand-yourself-as-artist"},
-  {title:"How to Add Music to Collaborative Playlist",category:"Streaming",desc:"Master the art of getting your music featured on collaborative playlists. Learn outreach strategies and playlist pitching techniques.",lessons:7,url:"https://academy-build.vercel.app/courses/add-music-collaborative-playlist"},
-  {title:"How to Add Songs to Your PRO",category:"Royalties",desc:"Step-by-step guide to registering your songs with your Performance Rights Organization to collect royalties.",lessons:7,url:"https://academy-build.vercel.app/courses/add-songs-to-pro"},
-  {title:"How to Promote Your Own Shows",category:"Marketing",desc:"Discover proven strategies for promoting your live shows, increasing attendance, and building a loyal fanbase.",lessons:7,url:"https://academy-build.vercel.app/courses/promote-your-shows"},
-  {title:"How to Copyright Your Music",category:"Legal",desc:"Protect your creative works by learning how to properly copyright your music and understand your rights as a creator.",lessons:7,url:"https://academy-build.vercel.app/courses/copyright-your-music"},
-  {title:"How to Create a Music Catalogue",category:"Business",desc:"Build and organize your music catalogue for licensing opportunities and professional industry management.",lessons:7,url:"https://academy-build.vercel.app/courses/create-music-catalogue"},
-  {title:"How to Distribute Your Music",category:"Distribution",desc:"Learn how to distribute your music to all major streaming platforms and digital stores worldwide.",lessons:6,url:"https://academy-build.vercel.app/courses/distribute-your-music"},
-  {title:"How to File Business Taxes",category:"Finance",desc:"Navigate the complexities of filing taxes as a music business owner. Stay compliant and maximize deductions.",lessons:6,url:"https://academy-build.vercel.app/courses/file-business-taxes"},
-  {title:"How to Setup a Business Bank Account",category:"Finance",desc:"Separate your personal and business finances by setting up a proper business bank account for your music career.",lessons:5,url:"https://academy-build.vercel.app/courses/setup-business-bank"},
-  {title:"How to Setup an LLC",category:"Legal",desc:"Protect your personal assets and establish credibility by forming an LLC for your music business.",lessons:6,url:"https://academy-build.vercel.app/courses/setup-llc"},
-  {title:"How to Setup a CRM",category:"Business",desc:"Organize your industry contacts and fan relationships with a Customer Relationship Management system.",lessons:5,url:"https://academy-build.vercel.app/courses/setup-crm"},
-  {title:"How to Submit Music to Blogs & Playlists",category:"Marketing",desc:"Learn effective strategies for pitching your music to music blogs and playlist curators for maximum exposure.",lessons:7,url:"https://academy-build.vercel.app/courses/submit-blogs-playlists"},
-  {title:"How to License Your Music",category:"Licensing",desc:"Unlock additional revenue streams by learning how to license your music for TV, film, commercials, and games.",lessons:6,url:"https://academy-build.vercel.app/courses/license-your-music"},
-  {title:"How to Register an E.I.N",category:"Legal",desc:"Get your Employer Identification Number to operate your music business officially and access business banking.",lessons:5,url:"https://academy-build.vercel.app/courses/register-ein"},
-  {title:"How to Register with a P.R.O",category:"Royalties",desc:"Register with a Performance Rights Organization to collect performance royalties from radio, venues, and streaming.",lessons:7,url:"https://academy-build.vercel.app/courses/register-with-pro"},
-  {title:"How to Network in the Music Industry",category:"Business",desc:"Build meaningful relationships in the music industry. Learn networking strategies that lead to real opportunities.",lessons:7,url:"https://academy-build.vercel.app/courses/network-music-industry"},
-  {title:"How to Trademark Your Music",category:"Legal",desc:"Protect your artist name, logos, and brand identity through trademark registration.",lessons:5,url:"https://academy-build.vercel.app/courses/trademark-your-music"},
+  {title:"How to Brand Yourself as an Artist",category:"Branding",desc:"Learn how to create a compelling personal brand that sets you apart in the music industry. Build your visual identity, messaging, and online presence.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Add Music to Collaborative Playlist",category:"Streaming",desc:"Master the art of getting your music featured on collaborative playlists. Learn outreach strategies and playlist pitching techniques.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Add Songs to Your PRO",category:"Royalties",desc:"Step-by-step guide to registering your songs with your Performance Rights Organization to collect royalties.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Promote Your Own Shows",category:"Marketing",desc:"Discover proven strategies for promoting your live shows, increasing attendance, and building a loyal fanbase.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Copyright Your Music",category:"Legal",desc:"Protect your creative works by learning how to properly copyright your music and understand your rights as a creator.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Create a Music Catalogue",category:"Business",desc:"Build and organize your music catalogue for licensing opportunities and professional industry management.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Distribute Your Music",category:"Distribution",desc:"Learn how to distribute your music to all major streaming platforms and digital stores worldwide.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to File Business Taxes",category:"Finance",desc:"Navigate the complexities of filing taxes as a music business owner. Stay compliant and maximize deductions.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Setup a Business Bank Account",category:"Finance",desc:"Separate your personal and business finances by setting up a proper business bank account for your music career.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Setup an LLC",category:"Legal",desc:"Protect your personal assets and establish credibility by forming an LLC for your music business.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Setup a CRM",category:"Business",desc:"Organize your industry contacts and fan relationships with a Customer Relationship Management system.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Submit Music to Blogs & Playlists",category:"Marketing",desc:"Learn effective strategies for pitching your music to music blogs and playlist curators for maximum exposure.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to License Your Music",category:"Licensing",desc:"Unlock additional revenue streams by learning how to license your music for TV, film, commercials, and games.",lessons:6,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Register an E.I.N",category:"Legal",desc:"Get your Employer Identification Number to operate your music business officially and access business banking.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Register with a P.R.O",category:"Royalties",desc:"Register with a Performance Rights Organization to collect performance royalties from radio, venues, and streaming.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Network in the Music Industry",category:"Business",desc:"Build meaningful relationships in the music industry. Learn networking strategies that lead to real opportunities.",lessons:7,url:"https://academy-build.vercel.app/#courses"},
+  {title:"How to Trademark Your Music",category:"Legal",desc:"Protect your artist name, logos, and brand identity through trademark registration.",lessons:5,url:"https://academy-build.vercel.app/#courses"},
 ];
 
 const catClass = {Business:'cat-business',Branding:'cat-branding',Streaming:'cat-streaming',Royalties:'cat-royalties',Marketing:'cat-marketing',Legal:'cat-legal',Distribution:'cat-distribution',Licensing:'cat-licensing',Finance:'cat-finance'};
