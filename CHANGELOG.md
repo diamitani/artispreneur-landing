@@ -1,5 +1,20 @@
 # Artispreneur — Version History
 
+## v2.1 — Unified Dashboard (Jul 14, 2026)
+- **Dashboard rebuilt** — all features integrated under one sidebar
+- **Agent chat** in dashboard home tab
+- **Academy embedded** in dashboard — 16 courses, filterable by category
+- **Directory embedded** — 6 categories, live search, 183 contacts
+- **Agent locking** on Free plan — Licensing & Finance locked behind BYOK/Pro
+- **Settings** tab — profile, API keys, integrations
+- **Knowledge Base** tab — soul.md preview
+- **Outputs** tab — generated files with draft/final tags
+
+### Files changed
+- `workspace.html` — full rewrite with embedded academy, directory, agents, chat
+
+---
+
 ## v2.0 — Agent Chat + Signup Flow (Jul 14, 2026)
 - **Landing page redesigned** with embedded chat UI (live demo)
 - **Signup flow** — 4-step onboarding: Plan → Account → Setup → Provisioning

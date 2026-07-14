@@ -3,343 +3,360 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workspace — Artispreneur OS</title>
-<meta name="description" content="Artispreneur OS agentic workspace — manage your 6 AI agents, outputs, projects, and music business from one dashboard.">
+<title>Dashboard — Artispreneur OS</title>
+<meta name="description" content="Your Artispreneur workspace — AI agents, academy, directory, outputs, and knowledge base.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--black:#09090b;--black-light:#111113;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.12);--green:#22c55e;--green-muted:rgba(34,197,94,0.12);--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--orange:#f97316;--cyan:#06b6d2;--radius:8px;--radius-lg:14px}
+:root{--black:#09090b;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.1);--green:#22c55e;--green-muted:rgba(34,197,94,0.12);--blue:#3b82f6;--purple:#a855f7;--orange:#f97316;--cyan:#06b6d2;--red:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.5;overflow-x:hidden}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.5;overflow:hidden;height:100vh}
 a{color:inherit;text-decoration:none}
-.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-.sidebar{background:var(--black-light);border-right:1px solid var(--border);padding:20px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:240px;z-index:100;overflow-y:auto}
-.sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:12px}
-.sidebar-logo img{height:22px}
-.sidebar-section{padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim)}
-.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 16px;margin:1px 8px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .12s;cursor:pointer}
-.sidebar-item:hover{background:var(--surface);color:var(--text)}
+.dashboard{display:grid;grid-template-columns:230px 1fr;height:100vh}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:16px 0}
+.sidebar-logo{padding:0 16px 14px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.sidebar-logo img{height:20px}
+.sidebar-section{padding:6px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-top:4px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;margin:1px 6px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .1s;cursor:pointer;border:none;background:none;width:calc(100% - 12px);text-align:left;font-family:'Inter',sans-serif}
+.sidebar-item:hover{background:var(--card);color:var(--text)}
 .sidebar-item.active{background:var(--gold-muted);color:var(--gold)}
-.sidebar-item .badge{font-size:10px;padding:1px 6px;border-radius:100px;margin-left:auto;background:var(--surface);color:var(--text-dim)}
+.sidebar-item .badge{font-size:10px;padding:1px 6px;border-radius:100px;margin-left:auto;background:var(--card);color:var(--text-dim)}
 .sidebar-item .badge.live{background:var(--green-muted);color:var(--green)}
-.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
-.sidebar-user{display:flex;align-items:center;gap:10px}
-.sidebar-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-muted);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.sidebar-user .name{font-size:13px;font-weight:600}
-.sidebar-user .plan{font-size:10px;color:var(--gold)}
-.main{margin-left:240px;padding:28px 32px;max-width:1200px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
-.topbar h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;letter-spacing:-.5px}
-.topbar-actions{display:flex;gap:10px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
-.btn-primary{background:var(--gold);color:var(--black)}
-.btn-primary:hover{background:var(--gold-light)}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}
-.btn-outline:hover{border-color:var(--border-light);color:var(--text);background:var(--surface)}
+.sidebar-item .badge.free{background:var(--gold-muted);color:var(--gold);font-size:9px;padding:1px 5px}
+.sidebar-footer{margin-top:auto;padding:14px 16px;border-top:1px solid var(--border)}
+.sidebar-user{display:flex;align-items:center;gap:8px}
+.sidebar-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-muted);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.sidebar-user .name{font-size:12px;font-weight:600}.sidebar-user .plan{font-size:10px;color:var(--gold)}
 
-.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
-.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:all .2s;position:relative}
+.main{overflow-y:auto;padding:24px 32px}
+.main-section{display:none}
+.main-section.active{display:block}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.topbar h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;letter-spacing:-.5px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
+.btn-gold{background:var(--gold);color:var(--black)}.btn-gold:hover{background:var(--gold-light)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}.btn-outline:hover{border-color:var(--border-light);color:var(--text);background:var(--surface)}
+
+/* Home */
+.home-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.chat-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;height:calc(100vh - 140px)}
+.chat-panel-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5;animation:fadeIn .2s ease}
+.chat-msg.agent{background:var(--card);color:var(--text-muted);align-self:flex-start;border-bottom-left-radius:4px}
+.chat-msg.user{background:var(--gold-muted);color:var(--gold);align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1;padding:10px 14px;background:var(--black);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif}
+.chat-input-row input:focus{outline:none;border-color:var(--gold)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.right-panels{display:flex;flex-direction:column;gap:16px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+.info-card h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.agent-status-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.agent-status-row:last-child{border-bottom:none}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-dot.on{background:var(--green)}.status-dot.off{background:var(--text-dim)}
+.quick-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-mini{text-align:center;padding:10px;background:var(--card);border-radius:8px}
+.stat-mini .n{font-size:18px;font-weight:800}
+.stat-mini .l{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* Agents */
+.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;transition:all .15s}
 .agent-card:hover{border-color:var(--border-light)}
-.agent-card .agent-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.agent-card .agent-name{font-size:15px;font-weight:700}
-.agent-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
-.agent-status.active{background:var(--green-muted);color:var(--green)}
-.agent-status.idle{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
-.agent-status.running{background:rgba(59,130,246,0.12);color:var(--blue)}
-.agent-card .agent-last{font-size:11px;color:var(--text-dim);line-height:1.5}
-.agent-card .agent-actions{display:flex;gap:8px;margin-top:14px}
-.agent-btn{font-size:11px;padding:5px 12px;border-radius:5px;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
+.agent-card .agent-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.agent-card .agent-name{font-size:14px;font-weight:700}
+.agent-card .agent-last{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:12px}
+.agent-actions{display:flex;gap:6px;flex-wrap:wrap}
+.agent-btn{font-size:11px;padding:5px 10px;border-radius:5px;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all .1s}
 .agent-btn:hover{border-color:var(--gold);color:var(--gold)}
+.agent-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
+.agent-badge.active{background:var(--green-muted);color:var(--green)}
+.agent-badge.locked{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
+.agent-card.locked{opacity:.6;position:relative}
+.agent-card.locked::after{content:'🔒 Upgrade to unlock';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--black);padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap}
 
-.quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px}
-.stat-icon{font-size:24px;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stat-icon.gold{background:var(--gold-muted);color:var(--gold)}
-.stat-icon.green{background:var(--green-muted);color:var(--green)}
-.stat-icon.blue{background:rgba(59,130,246,0.12);color:var(--blue)}
-.stat-icon.purple{background:rgba(168,85,247,0.12);color:var(--purple)}
-.stat-value{font-size:22px;font-weight:800;letter-spacing:-.5px}
-.stat-label{font-size:11px;color:var(--text-dim)}
+/* Academy */
+.academy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.academy-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all .12s}
+.academy-card:hover{border-color:var(--border-light)}
+.academy-card .cat{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;margin-bottom:8px;display:inline-block;text-transform:uppercase}
+.academy-card h3{font-size:13px;font-weight:700;line-height:1.3;margin-bottom:6px}
+.academy-card .lessons{font-size:11px;color:var(--text-dim)}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.filter-chip{font-size:11px;padding:4px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .1s;font-family:'Inter',sans-serif}
+.filter-chip:hover,.filter-chip.on{background:var(--gold-muted);border-color:var(--gold);color:var(--gold)}
 
-.panels{display:grid;grid-template-columns:1.5fr 1fr;gap:24px}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
-.panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-.panel-header h3{font-size:14px;font-weight:700}
-.panel-header .link{font-size:11px;color:var(--text-dim);transition:color .12s}
-.panel-header .link:hover{color:var(--gold)}
-.panel-body{padding:16px 20px}
-.output-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
-.output-item:last-child{border-bottom:none}
-.output-item .file-icon{font-size:18px;margin-right:10px}
-.output-item .file-info{flex:1}
-.output-item .file-name{font-size:13px;font-weight:600}
-.output-item .file-meta{font-size:11px;color:var(--text-dim);margin-top:2px}
-.output-item .file-badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600}
-.file-badge.draft{background:rgba(168,85,247,0.12);color:var(--purple)}
-.file-badge.final{background:var(--green-muted);color:var(--green)}
+/* Directory */
+.dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.dir-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .12s;cursor:pointer}
+.dir-card:hover{border-color:var(--gold)}
+.dir-card h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.dir-card .count{font-size:28px;font-weight:800;color:var(--gold)}
+.dir-card .desc{font-size:12px;color:var(--text-muted);margin-top:6px}
+.dir-search{margin-bottom:20px}
+.dir-search input{width:100%;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif}
+.dir-search input:focus{outline:none;border-color:var(--gold)}
 
-.activity-item{padding:12px 0;border-bottom:1px solid var(--border);font-size:12px}
-.activity-item:last-child{border-bottom:none}
-.activity-item .act-time{font-size:10px;color:var(--text-dim);margin-bottom:2px}
-.activity-item .act-text{color:var(--text-muted);line-height:1.4}
-.activity-item .act-agent{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-right:4px}
-.act-agent.pro{background:var(--gold-muted);color:var(--gold)}
-.act-agent.dist{background:var(--green-muted);color:var(--green)}
-.act-agent.legal{background:rgba(59,130,246,0.12);color:var(--blue)}
-.act-agent.finance{background:rgba(6,182,212,0.12);color:var(--cyan)}
+/* Outputs */
+.outputs-list{display:flex;flex-direction:column;gap:0}
+.output-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);font-size:13px}
+.output-row .file-info{flex:1;display:flex;align-items:center;gap:12px}
+.output-row .file-name{font-weight:600}.output-row .file-meta{font-size:11px;color:var(--text-dim)}
+.tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600}
+.tag.draft{background:rgba(168,85,247,0.12);color:var(--purple)}
+.tag.final{background:var(--green-muted);color:var(--green)}
 
-.soul-preview{background:var(--black);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);line-height:1.6;white-space:pre-wrap;max-height:200px;overflow-y:auto}
+/* Upgrade prompt */
+.upgrade-banner{background:var(--gold-muted);border:1px solid var(--gold);border-radius:12px;padding:20px 24px;text-align:center;margin-bottom:20px}
+.upgrade-banner h3{font-size:16px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.upgrade-banner p{font-size:13px;color:var(--text-muted);margin-bottom:12px}
+.upgrade-banner .btn{display:inline-flex}
 
-.footer-nav{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim)}
-.footer-nav a{color:var(--text-dim)}
-.footer-nav a:hover{color:var(--gold)}
-
-@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{margin-left:0}.agent-grid{grid-template-columns:1fr 1fr}.quick-stats{grid-template-columns:1fr 1fr}.panels{grid-template-columns:1fr}}
-@media(max-width:640px){.agent-grid,.quick-stats{grid-template-columns:1fr}.main{padding:16px}}
+@media(max-width:1024px){.dashboard{grid-template-columns:1fr}.sidebar{display:none}.home-grid{grid-template-columns:1fr}.agent-grid{grid-template-columns:1fr 1fr}.academy-grid{grid-template-columns:1fr 1fr 1fr}.dir-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.main{padding:14px}.agent-grid,.academy-grid,.dir-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="layout">
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <a href="index.html"><img src="logo.png" alt="Artispreneur"></a>
-    </div>
-    <div class="sidebar-section">Main</div>
-    <a href="workspace.html" class="sidebar-item active">⌂ Dashboard</a>
-    <a href="workspace.html#agents" class="sidebar-item">◈ Agents <span class="badge live">4 active</span></a>
-    <a href="workspace.html#outputs" class="sidebar-item">📁 Outputs <span class="badge">12</span></a>
-    <a href="workspace.html#projects" class="sidebar-item">◎ Projects</a>
+<div class="dashboard">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><a href="index.html"><img src="logo.png" alt="Artispreneur"></a></div>
+    <div class="sidebar-section">Workspace</div>
+    <button class="sidebar-item active" onclick="showSection('home',this)">⌂ Home</button>
+    <button class="sidebar-item" onclick="showSection('agents',this)">◈ Agents <span class="badge live">4 active</span></button>
 
-    <div class="sidebar-section" style="margin-top:8px">Tools</div>
-    <a href="#" class="sidebar-item">✦ Prompt Library</a>
-    <a href="#" class="sidebar-item">⚙ Skills Market</a>
-    <a href="directory.html" class="sidebar-item">◉ Directory</a>
+    <div class="sidebar-section">Free Tools</div>
+    <button class="sidebar-item" onclick="showSection('academy',this)">🎓 Academy <span class="badge free">Free</span></button>
+    <button class="sidebar-item" onclick="showSection('directory',this)">◉ Directory <span class="badge free">Free</span></button>
+    <button class="sidebar-item" onclick="showSection('outputs',this)">📁 Outputs <span class="badge">5</span></button>
+    <button class="sidebar-item" onclick="showSection('knowledge',this)">📚 Knowledge Base</button>
 
-    <div class="sidebar-section" style="margin-top:8px">Account</div>
-    <a href="pricing.html" class="sidebar-item">💎 Plans & Pricing</a>
-
-    <div class="sidebar-section" style="margin-top:8px">Learn</div>
-    <a href="academy.html" class="sidebar-item">🎓 Academy</a>
-    <a href="blog.html" class="sidebar-item">📰 Blog</a>
+    <div class="sidebar-section">Account</div>
+    <button class="sidebar-item" onclick="showSection('settings',this)">⚙ Settings</button>
+    <a href="pricing.html" class="sidebar-item">💎 Upgrade Plan</a>
+    <a href="index.html" class="sidebar-item">← Back to Site</a>
 
     <div class="sidebar-footer">
       <div class="sidebar-user">
-        <div class="sidebar-avatar">A</div>
-        <div>
-          <div class="name">Artist Name</div>
-          <div class="plan">Free Plan · BYOK</div>
-        </div>
+        <div class="sidebar-avatar">M</div>
+        <div><div class="name">Midnight</div><div class="plan">Free Plan</div></div>
       </div>
     </div>
   </nav>
 
-  <main class="main">
-    <div class="topbar">
-      <h1>Dashboard</h1>
-      <div class="topbar-actions">
-        <a href="pricing.html" class="btn btn-outline">Upgrade Plan</a>
-        <button class="btn btn-primary" onclick="alert('🎵 New agent task queued. Agents will respond shortly.')">+ New Task</button>
-      </div>
-    </div>
+  <main class="main" id="mainContent">
 
-    <div class="quick-stats">
-      <div class="stat-card">
-        <div class="stat-icon gold">◈</div>
-        <div>
-          <div class="stat-value">4/6</div>
-          <div class="stat-label">Agents Active</div>
+    <!-- HOME -->
+    <div class="main-section active" id="section-home">
+      <div class="topbar"><h1>Dashboard</h1><a href="pricing.html" class="btn btn-gold">Upgrade to BYOK</a></div>
+      <div class="home-grid">
+        <div class="chat-panel">
+          <div class="chat-panel-header">💬 Agent Chat</div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg agent">Welcome back, Midnight! 👋<br><br>Here's what's happening:<br>• PRO Agent registered "Gold Hour" with BMI<br>• Distribution Agent submitted to 3 new playlists<br>• Legal Agent has your LLC docs ready for review<br><br>What should we work on today?</div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Ask your agent anything..." onkeydown="if(event.key==='Enter')sendDashboardChat()">
+            <button class="btn btn-gold" onclick="sendDashboardChat()">Send</button>
+          </div>
         </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon green">✓</div>
-        <div>
-          <div class="stat-value">23</div>
-          <div class="stat-label">Actions This Month</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon blue">📁</div>
-        <div>
-          <div class="stat-value">12</div>
-          <div class="stat-label">Output Files</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon purple">◎</div>
-        <div>
-          <div class="stat-value">3</div>
-          <div class="stat-label">Active Projects</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="agent-grid" id="agents">
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">♩ PRO Agent</span>
-          <span class="agent-status active">Active</span>
-        </div>
-        <div class="agent-last">📋 Registered 2 songs with BMI this week<br>📋 Catalog: 14 works · $1,240 royalties YTD</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('PRO Agent: Registering new song…')">Register Song</button>
-          <button class="agent-btn" onclick="alert('PRO Agent: Generating splitsheet…')">Splitsheet</button>
-        </div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">↗ Distribution Agent</span>
-          <span class="agent-status active">Active</span>
-        </div>
-        <div class="agent-last">🎧 Submitted to 8 playlists this week<br>📊 New single on Spotify, Apple Music, TIDAL</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('Distribution: Searching for playlist opportunities…')">Find Playlists</button>
-          <button class="agent-btn" onclick="alert('Distribution: Analyzing streaming stats…')">Stats</button>
-        </div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">⚡ Licensing Agent</span>
-          <span class="agent-status idle">Idle</span>
-        </div>
-        <div class="agent-last">🎬 3 music libraries contacted<br>⏳ Awaiting response from 2 supervisors</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('Licensing: Finding sync opportunities…')">Find Sync</button>
-          <button class="agent-btn" onclick="alert('Licensing: Creating pitch template…')">Pitch</button>
-        </div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">§ Legal Agent</span>
-          <span class="agent-status running">Running</span>
-        </div>
-        <div class="agent-last">⚙ Generating Operating Agreement draft…<br>📄 LLC formed in IL · EIN registered</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('Legal: Generating contract…')">Contract</button>
-          <button class="agent-btn" onclick="alert('Legal: Reviewing terms…')">Review</button>
-        </div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">$ Finance Agent</span>
-          <span class="agent-status active">Active</span>
-        </div>
-        <div class="agent-last">💰 Revenue: $4,230 this quarter<br>📊 Tax estimate: Q3 payment due Oct 15</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('Finance: Running analysis…')">Analysis</button>
-          <button class="agent-btn" onclick="alert('Finance: Preparing tax summary…')">Tax</button>
-        </div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header">
-          <span class="agent-name">◎ Manager Agent</span>
-          <span class="agent-status active">Active</span>
-        </div>
-        <div class="agent-last">📅 Next: EPK review meeting (Wed)<br>🗺 Roadmap updated: Q3 release strategy</div>
-        <div class="agent-actions">
-          <button class="agent-btn" onclick="alert('Manager: Drafting business plan…')">Plan</button>
-          <button class="agent-btn" onclick="alert('Manager: Scheduling…')">Schedule</button>
+        <div class="right-panels">
+          <div class="info-card">
+            <h4>◈ Agent Status</h4>
+            <div class="agent-status-row"><span>PRO Agent</span><span class="status-dot on"></span></div>
+            <div class="agent-status-row"><span>Distribution Agent</span><span class="status-dot on"></span></div>
+            <div class="agent-status-row"><span>Licensing Agent</span><span class="status-dot off"></span></div>
+            <div class="agent-status-row"><span>Legal Agent</span><span class="status-dot on"></span></div>
+            <div class="agent-status-row"><span>Finance Agent</span><span class="status-dot off"></span></div>
+            <div class="agent-status-row"><span>Manager Agent</span><span class="status-dot on"></span></div>
+          </div>
+          <div class="quick-stats">
+            <div class="stat-mini"><div class="n">14</div><div class="l">Catalog</div></div>
+            <div class="stat-mini"><div class="n">$1.2k</div><div class="l">Royalties</div></div>
+            <div class="stat-mini"><div class="n">23</div><div class="l">Actions</div></div>
+            <div class="stat-mini"><div class="n">3</div><div class="l">Projects</div></div>
+          </div>
+          <div class="info-card">
+            <h4>📋 Recent Activity</h4>
+            <div style="font-size:11px;color:var(--text-dim);line-height:2">
+              <div>2h ago — PRO: Registered "Gold Hour"</div>
+              <div>4h ago — Dist: Submitted to playlists</div>
+              <div>Yesterday — Legal: LLC docs generated</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="panels">
-      <div class="panel" id="outputs">
-        <div class="panel-header">
-          <h3>Recent Outputs</h3>
-          <a href="#" class="link">View All →</a>
-        </div>
-        <div class="panel-body">
-          <div class="output-item">
-            <span class="file-icon">📄</span>
-            <div class="file-info">
-              <div class="file-name">LLC_Operating_Agreement_v2.pdf</div>
-              <div class="file-meta">Legal Agent · 2 days ago · 8 pages</div>
-            </div>
-            <span class="file-badge final">Final</span>
-          </div>
-          <div class="output-item">
-            <span class="file-icon">🎵</span>
-            <div class="file-info">
-              <div class="file-name">Midnight_EP_Metadata_Export.xlsx</div>
-              <div class="file-meta">PRO Agent · 3 days ago · ISRCs: 6 tracks</div>
-            </div>
-            <span class="file-badge final">Final</span>
-          </div>
-          <div class="output-item">
-            <span class="file-icon">📊</span>
-            <div class="file-info">
-              <div class="file-name">Q2_Streaming_Royalty_Analysis.pdf</div>
-              <div class="file-meta">Finance Agent · 5 days ago · 12 pages</div>
-            </div>
-            <span class="file-badge final">Final</span>
-          </div>
-          <div class="output-item">
-            <span class="file-icon">📝</span>
-            <div class="file-info">
-              <div class="file-name">Sync_License_Pitch_Draft_v3.docx</div>
-              <div class="file-meta">Licensing Agent · 6 days ago</div>
-            </div>
-            <span class="file-badge draft">Draft</span>
-          </div>
-          <div class="output-item">
-            <span class="file-icon">📋</span>
-            <div class="file-info">
-              <div class="file-name">Q3_Release_Strategy_Roadmap.md</div>
-              <div class="file-meta">Manager Agent · 1 week ago</div>
-            </div>
-            <span class="file-badge final">Final</span>
-          </div>
-        </div>
+    <!-- AGENTS -->
+    <div class="main-section" id="section-agents">
+      <div class="topbar"><h1>Agents</h1><span style="font-size:12px;color:var(--text-dim)">4 of 6 active on Free plan</span></div>
+      <div class="upgrade-banner">
+        <h3>🔒 Licensing & Finance Agents Locked</h3>
+        <p>Upgrade to BYOK or Pro to unlock all 6 agents with unlimited usage.</p>
+        <a href="pricing.html" class="btn btn-gold">Upgrade →</a>
       </div>
-      <div class="panel">
-        <div class="panel-header">
-          <h3>Recent Activity</h3>
-          <a href="#" class="link">Full Log →</a>
-        </div>
-        <div class="panel-body">
-          <div class="activity-item">
-            <div class="act-time">Today · 2 hours ago</div>
-            <div class="act-text"><span class="act-agent pro">PRO</span> Registered "Midnight" with BMI. ISWC assigned.</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-time">Today · 4 hours ago</div>
-            <div class="act-text"><span class="act-agent dist">Dist</span> Submitted "Midnight" to 3 Spotify playlists.</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-time">Yesterday · 11:30 AM</div>
-            <div class="act-text"><span class="act-agent legal">Legal</span> Generated LLC Operating Agreement v2.</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-time">Yesterday · 9:15 AM</div>
-            <div class="act-text"><span class="act-agent finance">Finance</span> Completed Q2 revenue analysis. $4,230 total.</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-time">Jul 10 · 3:00 PM</div>
-            <div class="act-text"><span class="act-agent pro">PRO</span> Extracted metadata from 6 new EP tracks.</div>
-          </div>
-          <div class="activity-item" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-            <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">soul.md Preview</div>
-            <div class="soul-preview"># Artist: Midnight
+      <div class="agent-grid">
+        <div class="agent-card"><div class="agent-top"><span class="agent-name">♩ PRO Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Catalog: 14 works · BMI registered · $1,240 royalties YTD</div><div class="agent-actions"><button class="agent-btn">Register Song</button><button class="agent-btn">Splitsheet</button><button class="agent-btn">View Catalog</button></div></div>
+        <div class="agent-card"><div class="agent-top"><span class="agent-name">↗ Distribution Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Submitted to 8 playlists · New single on Spotify, Apple Music, TIDAL</div><div class="agent-actions"><button class="agent-btn">Find Playlists</button><button class="agent-btn">Stats</button><button class="agent-btn">Upload Release</button></div></div>
+        <div class="agent-card locked"><div class="agent-top"><span class="agent-name">⚡ Licensing Agent</span><span class="agent-badge locked">Locked</span></div><div class="agent-last">Sync licensing, music libraries, supervisor outreach, UGC campaigns</div><div class="agent-actions"><button class="agent-btn" disabled>Find Sync</button><button class="agent-btn" disabled>Pitch</button></div></div>
+        <div class="agent-card"><div class="agent-top"><span class="agent-name">§ Legal Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">LLC formed in IL · EIN registered · 3 contract templates generated</div><div class="agent-actions"><button class="agent-btn">Contract</button><button class="agent-btn">Review</button><button class="agent-btn">EIN Status</button></div></div>
+        <div class="agent-card locked"><div class="agent-top"><span class="agent-name">$ Finance Agent</span><span class="agent-badge locked">Locked</span></div><div class="agent-last">Business banking, transaction analysis, tax management, quarterly estimates</div><div class="agent-actions"><button class="agent-btn" disabled>Analysis</button><button class="agent-btn" disabled>Tax Prep</button></div></div>
+        <div class="agent-card"><div class="agent-top"><span class="agent-name">◎ Manager Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Q3 release strategy · EPK in progress · 3 active projects</div><div class="agent-actions"><button class="agent-btn">Plan</button><button class="agent-btn">Schedule</button><button class="agent-btn">Research</button></div></div>
+      </div>
+    </div>
+
+    <!-- ACADEMY -->
+    <div class="main-section" id="section-academy">
+      <div class="topbar"><h1>Academy</h1><span style="font-size:12px;color:var(--text-dim)">16 courses · 307 modules · Free</span></div>
+      <div class="filter-bar" id="academyFilter"></div>
+      <div class="academy-grid" id="academyGrid"></div>
+    </div>
+
+    <!-- DIRECTORY -->
+    <div class="main-section" id="section-directory">
+      <div class="topbar"><h1>Directory</h1><span style="font-size:12px;color:var(--text-dim)">183 contacts · 6 categories · Free</span></div>
+      <div class="dir-search"><input type="text" placeholder="Search venues, radio, blogs, press, podcasts..." oninput="filterDir(this.value)"></div>
+      <div class="dir-grid" id="dirGrid">
+        <div class="dir-card" data-search="venues live music chicago national"><h3>🎤 Venues</h3><div class="count">45</div><div class="desc">Chicago + National booking contacts</div></div>
+        <div class="dir-card" data-search="radio stations il ca ny tn tx online"><h3>📻 Radio</h3><div class="count">40</div><div class="desc">Terrestrial & online stations</div></div>
+        <div class="dir-card" data-search="blogs publications genre networks"><h3>📝 Blogs</h3><div class="count">35</div><div class="desc">Major, genre, and network blogs</div></div>
+        <div class="dir-card" data-search="press media journalists chicago"><h3>📰 Press</h3><div class="count">25</div><div class="desc">Journalists & media contacts</div></div>
+        <div class="dir-card" data-search="podcasts industry songwriting discovery"><h3>🎙 Podcasts</h3><div class="count">20</div><div class="desc">Industry & discovery podcasts</div></div>
+        <div class="dir-card" data-search="community government arts grants 48th ward"><h3>🏛 Community</h3><div class="count">18</div><div class="desc">Arts orgs, grants, 48th Ward</div></div>
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div class="main-section" id="section-outputs">
+      <div class="topbar"><h1>Outputs</h1><button class="btn btn-outline">+ New Output</button></div>
+      <div class="outputs-list">
+        <div class="output-row"><div class="file-info"><span>📄</span><div><div class="file-name">LLC_Operating_Agreement_v2.pdf</div><div class="file-meta">Legal Agent · 2 days ago · 8 pages</div></div></div><span class="tag final">Final</span></div>
+        <div class="output-row"><div class="file-info"><span>🎵</span><div><div class="file-name">Metadata_Export_Singles_2026.xlsx</div><div class="file-meta">PRO Agent · 3 days ago · ISRCs: 6 tracks</div></div></div><span class="tag final">Final</span></div>
+        <div class="output-row"><div class="file-info"><span>📊</span><div><div class="file-name">Q2_Streaming_Royalty_Analysis.pdf</div><div class="file-meta">Finance Agent · 5 days ago · 12 pages</div></div></div><span class="tag final">Final</span></div>
+        <div class="output-row"><div class="file-info"><span>📝</span><div><div class="file-name">Sync_License_Pitch_Draft_v3.docx</div><div class="file-meta">Licensing Agent · 6 days ago</div></div></div><span class="tag draft">Draft</span></div>
+        <div class="output-row"><div class="file-info"><span>📋</span><div><div class="file-name">Q3_Release_Strategy_Roadmap.md</div><div class="file-meta">Manager Agent · 1 week ago</div></div></div><span class="tag final">Final</span></div>
+      </div>
+    </div>
+
+    <!-- KNOWLEDGE BASE -->
+    <div class="main-section" id="section-knowledge">
+      <div class="topbar"><h1>Knowledge Base</h1></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="info-card"><h4>📋 soul.md</h4><pre style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.6"># Artist: Midnight
 # Genre: Alternative R&B
-# Current Projects:
-# - EP: "Midnight in the Garden" (due Aug 2026)
-# - Single: "Gold Hour" (release strategy active)
-# Business Entity: Midnight Music LLC (IL)
 # PRO: BMI (IPI#: 0123456789)
+# Business: Midnight Music LLC (IL)
 # Distributor: UnitedMasters
-# Goals: 100K streams, first sync placement, tour Q4</div>
-          </div>
-        </div>
+# Current: EP "Midnight in the Garden" (Aug 2026)
+# Goals: 100K streams, first sync, tour Q4</pre></div>
+        <div class="info-card"><h4>📚 Quick Links</h4><div style="font-size:13px;color:var(--text-muted);line-height:2.2">
+          <div>→ <a href="#section-academy" onclick="showSection('academy',document.querySelectorAll('.sidebar-item')[2])">Academy Courses</a></div>
+          <div>→ <a href="#section-directory" onclick="showSection('directory',document.querySelectorAll('.sidebar-item')[3])">Contact Directory</a></div>
+          <div>→ <a href="#section-outputs" onclick="showSection('outputs',document.querySelectorAll('.sidebar-item')[4])">Output Files</a></div>
+          <div>→ <a href="https://academy-build.vercel.app">Full Academy Site</a></div>
+          <div>→ <a href="https://directory-build.vercel.app">Full Directory Site</a></div>
+        </div></div>
       </div>
     </div>
 
-    <footer class="footer-nav">
-      <span>Artispreneur OS v0.1 · Hermes Agent + ROSTR Framework</span>
-      <span><a href="index.html">← Back to Site</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a> &nbsp;|&nbsp; <a href="terms.html">Terms</a></span>
-    </footer>
+    <!-- SETTINGS -->
+    <div class="main-section" id="section-settings">
+      <div class="topbar"><h1>Settings</h1></div>
+      <div class="info-card" style="margin-bottom:16px">
+        <h4>👤 Profile</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+          <div><label style="font-size:11px;color:var(--text-dim)">Name</label><input style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" value="Midnight"></div>
+          <div><label style="font-size:11px;color:var(--text-dim)">Email</label><input style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" value="midnight@email.com"></div>
+        </div>
+        <button class="btn btn-gold" style="margin-top:12px">Save Changes</button>
+      </div>
+      <div class="info-card" style="margin-bottom:16px">
+        <h4>🔑 API Keys</h4>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Current plan: Free (Gemini credits). <a href="pricing.html" style="color:var(--gold)">Upgrade to BYOK</a> to use your own keys.</p>
+        <div style="margin-top:8px"><label style="font-size:11px;color:var(--text-dim)">BYOK API Key</label><input type="password" style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" placeholder="Upgrade to BYOK to add your key" disabled></div>
+      </div>
+      <div class="info-card">
+        <h4>🔗 Integrations</h4>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-outline" onclick="alert('Google Drive OAuth — coming soon')">Connect Google Drive</button>
+          <button class="btn btn-outline" style="opacity:.5;cursor:not-allowed">Signal Messaging (BYOK)</button>
+          <button class="btn btn-outline" style="opacity:.5;cursor:not-allowed">Wire (Matrix) Bridge (BYOK)</button>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
+
+<script>
+// Navigation
+function showSection(name, btn) {
+  document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// Dashboard chat
+function sendDashboardChat() {
+  const input = document.getElementById('chatInput');
+  const msgs = document.getElementById('chatMessages');
+  const text = input.value.trim();
+  if (!text) return;
+  msgs.innerHTML += `<div class="chat-msg user">${text}</div>`;
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    msgs.innerHTML += `<div class="chat-msg agent">Got it! I'm on it. Want me to dive deeper into "${text.substring(0,40)}${text.length>40?'...':''}" or should we look at something else?</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 800);
+}
+
+// Academy data
+const courses = [
+  {t:"How to Brand Yourself as an Artist",c:"Branding",n:18,u:"courses/brand-yourself-as-artist.html"},
+  {t:"How to Add Music to Collaborative Playlist",c:"Streaming",n:14,u:"courses/add-music-collaborative-playlist.html"},
+  {t:"How to Add Songs to Your PRO",c:"Royalties",n:20,u:"courses/add-songs-to-pro.html"},
+  {t:"How to Book and Promote Your Own Shows",c:"Marketing",n:16,u:"courses/promote-your-shows.html"},
+  {t:"How to Copyright Your Music",c:"Legal",n:19,u:"courses/copyright-your-music.html"},
+  {t:"How to Create a Music Catalogue",c:"Business",n:16,u:"courses/create-music-catalogue.html"},
+  {t:"How to Distribute Your Music",c:"Distribution",n:21,u:"courses/distribute-your-music.html"},
+  {t:"How to File Business Taxes",c:"Finance",n:23,u:"courses/file-business-taxes.html"},
+  {t:"How to Set Up a Business Bank Account",c:"Finance",n:20,u:"courses/setup-business-bank-account.html"},
+  {t:"How to Set Up an LLC",c:"Legal",n:20,u:"courses/setup-llc.html"},
+  {t:"How to Set Up a CRM",c:"Business",n:20,u:"courses/setup-crm.html"},
+  {t:"How to Submit Music to Blogs & Playlists",c:"Marketing",n:23,u:"courses/submit-music-blogs-playlists.html"},
+  {t:"How to License Your Music",c:"Licensing",n:21,u:"courses/license-your-music.html"},
+  {t:"How to Register an E.I.N.",c:"Legal",n:20,u:"courses/register-ein.html"},
+  {t:"How to Register with a P.R.O.",c:"Royalties",n:17,u:"courses/register-with-pro.html"},
+  {t:"How to Trademark Your Music",c:"Legal",n:19,u:"courses/trademark-your-music.html"},
+];
+const catColors = {Branding:'#ef4444',Streaming:'#22c55e',Royalties:'#3b82f6',Marketing:'#a855f7',Legal:'#06b6d2',Business:'#c9a227',Distribution:'#f97316',Finance:'#22c55e',Licensing:'#a855f7'};
+
+function renderAcademy(filter=null) {
+  const cats = [...new Set(courses.map(c=>c.c))];
+  document.getElementById('academyFilter').innerHTML = `<span class="filter-chip ${!filter?'on':''}" onclick="renderAcademy(null)">All</span>` + cats.map(c=>`<span class="filter-chip ${filter===c?'on':''}" onclick="renderAcademy('${c}')">${c}</span>`).join('');
+  const filtered = filter ? courses.filter(c=>c.c===filter) : courses;
+  document.getElementById('academyGrid').innerHTML = filtered.map(c=>`
+    <a href="${c.u}" class="academy-card">
+      <span class="cat" style="background:${(catColors[c.c]||'#c9a227')+'20'};color:${catColors[c.c]||'#c9a227'}">${c.c}</span>
+      <h3>${c.t}</h3>
+      <span class="lessons">${c.n} modules</span>
+    </a>`).join('');
+}
+
+// Directory filter
+function filterDir(q) {
+  document.querySelectorAll('#dirGrid .dir-card').forEach(c => {
+    c.style.display = !q || c.dataset.search.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// Init
+renderAcademy();
+</script>
 </body>
 </html>
