@@ -122,6 +122,32 @@ input,textarea,button{font-family:'Inter',sans-serif}
 .back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-muted);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;padding:6px 10px;border-radius:6px}
 .back-btn:hover{color:var(--text);background:var(--card)}
 
+/* Plan card */
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.plan-progress{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(34,197,94,.12);color:var(--accent-green)}
+.plan-steps{display:flex;flex-direction:column;gap:7px}
+.plan-step{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-muted)}
+.step-check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:var(--surface);border:1.5px solid var(--border);flex-shrink:0}
+/* Tool card */
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.tool-header{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.tool-icon{width:24px;height:24px;border-radius:6px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:12px}
+.tool-name{font-family:'Geist Mono',monospace;font-size:12px;font-weight:500}
+.tool-check{color:var(--accent-green);font-size:13px;margin-left:auto}
+.tool-summary{font-size:11px;color:var(--text-dim);line-height:1.4}
+.tool-time{font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:4px}
+/* Artifact card */
+.artifact-card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:border .15s}
+.artifact-card:hover{border-color:var(--gold)}
+.artifact-icon{width:32px;height:32px;border-radius:8px;background:var(--gold-subtle);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.artifact-name{font-size:12px;font-weight:600}.artifact-meta{font-size:10px;color:var(--text-dim)}
+.artifact-dl{font-size:14px;color:var(--text-dim);margin-left:auto}
+/* Composer agent select */
+.composer-actions{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 12px 12px}
+.composer-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--text-muted);background:var(--card);border-radius:6px;padding:5px 10px;cursor:pointer;border:1px solid var(--border);font-family:'Inter',sans-serif;transition:all .1s}
+.composer-chip:hover{border-color:var(--gold);color:var(--gold)}
+
 @media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{display:none}.app.context-open{grid-template-columns:1fr}.context-panel{position:fixed;right:0;top:0;bottom:0;width:300px;z-index:20}}
 </style>
 </head>
@@ -149,8 +175,18 @@ input,textarea,button{font-family:'Inter',sans-serif}
       <a href="index.html" class="nav-item">← Exit</a>
     </nav>
     <div class="sidebar-footer">
-      <div class="agent-avatar pro" style="width:26px;height:26px;border-radius:7px">M</div>
-      <div><div style="font-size:12px;font-weight:600">Midnight</div><div style="font-size:10px;color:var(--text-dim)">Free Plan</div></div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-dim);margin-bottom:4px">
+          <span style="font-weight:600">Monthly agent usage</span><span id="usagePct">62%</span>
+        </div>
+        <div style="height:3px;background:var(--border);border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:62%;background:var(--gold);border-radius:2px" id="usageBar"></div>
+        </div>
+      </div>
+      <div class="sidebar-user">
+        <div class="agent-avatar pro" style="width:26px;height:26px;border-radius:7px">M</div>
+        <div><div style="font-size:12px;font-weight:600">Midnight</div><div style="font-size:10px;color:var(--text-dim)">Free Plan · 62% used</div></div>
+      </div>
     </div>
   </aside>
 
@@ -186,8 +222,17 @@ input,textarea,button{font-family:'Inter',sans-serif}
       </div>
       <div class="chat-footer">
         <div class="chat-input-wrap">
-          <textarea id="chatInput" placeholder="Ask anything — PRO registration, distribution, contracts, taxes..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this);updateCharCount()"></textarea>
+          <textarea id="chatInput" placeholder="Ask anything — or type / for prompts..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this);updateCharCount()"></textarea>
           <button class="send-btn" onclick="sendMessage()" id="sendBtn" disabled>↑</button>
+        </div>
+        <div class="composer-actions">
+          <span class="composer-chip" onclick="cycleAgent()">
+            <span class="agent-avatar mgr" id="composerAvatar" style="display:inline-flex;width:16px;height:16px;border-radius:4px;font-size:9px">◎</span>
+            <span id="composerAgent">Manager</span>
+            <span style="font-size:9px">▾</span>
+          </span>
+          <span style="flex:1"></span>
+          <span style="font-size:10px;color:var(--text-dim)">Type <code style="font-family:'Geist Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:0 4px">/</code> for prompts</span>
         </div>
         <div class="char-count" id="charCount"></div>
       </div>
@@ -352,32 +397,62 @@ function cycleAgent() {
   switchAgent(next);
 }
 
-function addMessage(text, role) {
+function addMessage(text, role, extra) {
   const container = document.getElementById('chatMessages');
   const el = document.createElement('div');
   el.className = 'message ' + role;
   const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
   const avatarIcon = role === 'user' ? 'M' : agents[currentAgent].icon;
   const avatarClass = role === 'user' ? '' : agents[currentAgent].cls;
+  
+  let bodyHtml = '';
+  if (extra === 'plan') {
+    bodyHtml = `<div class="plan-card"><div class="plan-header"><span>📋 Plan</span><span class="plan-progress">In Progress</span></div><div class="plan-steps">${text.split('|').map((s,i) => `<div class="plan-step"><span class="step-check">${i===0?'✓':i+1}</span><span>${s.trim()}</span></div>`).join('')}</div></div>`;
+  } else if (extra === 'tool') {
+    const [toolName, toolSummary, toolTime] = text.split('||');
+    bodyHtml = `<div class="tool-card"><div class="tool-header"><span class="tool-icon">⚡</span><span class="tool-name">${toolName||'Tool'}</span><span class="tool-check">✓</span></div><div class="tool-summary">${toolSummary||''}</div><div class="tool-time">${toolTime||'just now'}</div></div>`;
+  } else if (extra === 'artifact') {
+    const [fileName, fileMeta] = text.split('||');
+    bodyHtml = `<div class="artifact-card"><div class="artifact-icon">📄</div><div class="artifact-info"><div class="artifact-name">${fileName||'file.pdf'}</div><div class="artifact-meta">${fileMeta||'Generated'}</div></div><span class="artifact-dl">⬇</span></div>`;
+  } else {
+    bodyHtml = text.split('\n').map(l => l.startsWith('•')||l.startsWith('|')||l.startsWith('1.')||l.startsWith('2.')||l.startsWith('3.') ? l : l ? `<p>${l}</p>` : '<br>').join('');
+  }
+  
   el.innerHTML = `
     <div class="avatar${avatarClass ? ' agent-avatar '+avatarClass : ''}" style="${role==='user'?'background:var(--gold-subtle);color:var(--gold)':''}">${avatarIcon}</div>
-    <div>
-      <div class="bubble">${text.split('\n').map(l => l.startsWith('•')||l.startsWith('|')||l.startsWith('1.')||l.startsWith('2.')||l.startsWith('3.') ? l : l ? `<p>${l}</p>` : '<br>').join('')}</div>
-      <div class="time">${time}</div>
-    </div>`;
-  container.appendChild(el);
-  container.parentElement.scrollTop = container.parentElement.scrollHeight;
-}
+    function switchAgent(key) {
+      currentAgent = key;
+      const a = agents[key];
+      document.getElementById('agentAvatar').textContent = a.icon;
+      document.getElementById('agentAvatar').className = 'agent-avatar ' + a.cls;
+      document.getElementById('agentName').textContent = a.name;
+      // Sync composer
+      document.getElementById('composerAvatar').textContent = a.icon;
+      document.getElementById('composerAvatar').className = 'agent-avatar ' + a.cls;
+      document.getElementById('composerAvatar').style.cssText = 'display:inline-flex;width:16px;height:16px;border-radius:4px;font-size:9px';
+      document.getElementById('composerAgent').textContent = a.name.split(' ')[0];
+    }
 
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-  if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openCmd(); }
-  if (e.key >= '1' && e.key <= '6' && (e.metaKey || e.ctrlKey)) {
-    e.preventDefault();
-    const keys = Object.keys(agents);
-    switchAgent(keys[e.key - 1]);
-  }
-}
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openCmd(); }
+      if (e.key === '/' && !e.target.value) { e.preventDefault(); showPromptMenu(); }
+      if (e.key >= '1' && e.key <= '6' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        switchAgent(Object.keys(agents)[e.key - 1]);
+      }
+    }
+
+    function showPromptMenu() {
+      const menu = document.createElement('div');
+      menu.style.cssText = 'position:absolute;bottom:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px;z-index:20';
+      menu.innerHTML = prompts.flatMap(c => c.items.slice(0,2)).map(p => `<div style="padding:6px 10px;border-radius:6px;font-size:12px;color:var(--text-muted);cursor:pointer" onclick="document.getElementById('chatInput').value='${p}';this.parentElement.remove();document.getElementById('chatInput').focus()" onmouseover="this.style.background='var(--card)'" onmouseout="this.style.background='none'">/${p.slice(0,40)}...</div>`).join('');
+      menu.id = 'promptMenu';
+      const wrap = document.querySelector('.chat-footer');
+      wrap.style.position = 'relative';
+      wrap.appendChild(menu);
+      setTimeout(() => { const m = document.getElementById('promptMenu'); if (m) m.remove(); }, 5000);
+    }
 
 function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
 function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('chatInput').value.length; document.getElementById('sendBtn').disabled = !document.getElementById('chatInput').value.trim(); }
