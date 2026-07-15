@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profile — Artispreneur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--surface:#111113;--card:#18181b;--border:#252529;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#63636b;--gold:#c9a227;--gold-light:#e0b832;--gold-subtle:rgba(201,162,39,0.08)}
+*{margin:0;padding:0;box-sizing:border-box;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+.container{max-width:800px;margin:0 auto;padding:0 24px}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1000px;margin:0 auto}
+.navbar img{height:20px}
+main{padding:40px 0 80px}
+.profile-header{text-align:center;margin-bottom:40px}
+.profile-avatar{width:100px;height:100px;border-radius:50%;background:var(--gold-subtle);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px}
+.profile-header h1{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;margin-bottom:4px}
+.profile-header .location{font-size:13px;color:var(--text-dim)}
+.profile-header .stats{display:flex;justify-content:center;gap:32px;margin-top:16px}
+.profile-stat{text-align:center}.profile-stat .val{font-size:20px;font-weight:800;color:var(--gold)}.profile-stat .lbl{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+
+.section{margin-bottom:36px}
+.section h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:12px}
+.bio-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;color:var(--text-muted);line-height:1.8}
+
+.tag-grid{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:11px;padding:5px 14px;border-radius:100px;background:var(--card);border:1px solid var(--border);color:var(--text-muted)}
+
+.link-card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:8px;transition:all .1s}
+.link-card:hover{border-color:var(--gold)}
+.link-card .platform-icon{font-size:20px;width:40px;height:40px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center}
+.link-card .platform-name{font-weight:600;font-size:13px}
+.link-card .platform-stat{font-size:11px;color:var(--text-dim)}
+
+.soul-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;max-height:300px;overflow-y:auto}
+
+.cta{text-align:center;padding:40px 0}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border-radius:10px;font-weight:700;font-size:14px;background:var(--gold);color:var(--bg);transition:all .15s}
+.btn:hover{background:var(--gold-light)}
+@media(max-width:500px){.profile-header .stats{flex-wrap:wrap;gap:16px}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html"><img src="logo.png" alt="A"></a>
+  <a href="workspace.html" style="font-size:13px;color:var(--text-dim)">← Workspace</a>
+</nav>
+
+<main class="container">
+  <div class="profile-header">
+    <div class="profile-avatar" id="profileAvatar">🎤</div>
+    <h1 id="profileName">Your Name</h1>
+    <div class="location" id="profileLocation">Hometown → Current City</div>
+    <div class="stats" id="profileStats"></div>
+  </div>
+
+  <div class="section">
+    <h3>Bio</h3>
+    <div class="bio-card" id="profileBio">Complete your onboarding to generate your PAL-powered bio.</div>
+  </div>
+
+  <div class="section">
+    <h3>Goals</h3>
+    <div class="tag-grid" id="profileGoals"></div>
+  </div>
+
+  <div class="section">
+    <h3>Experience</h3>
+    <div class="tag-grid" id="profileExp"></div>
+  </div>
+
+  <div class="section">
+    <h3>Links & Platforms</h3>
+    <div id="profileLinks"></div>
+  </div>
+
+  <div class="section">
+    <h3>S3 Knowledge Base</h3>
+    <div class="soul-card" id="profileSoul">No knowledge base yet. Complete onboarding to build yours.</div>
+  </div>
+
+  <div class="cta">
+    <a href="onboarding.html" class="btn">Set Up Your Profile →</a>
+  </div>
+</main>
+
+<script>
+// Load profile data from localStorage (set during onboarding)
+const data = JSON.parse(localStorage.getItem('artispreneur_profile') || '{}');
+if (data.name || data.stage_name) {
+  document.getElementById('profileAvatar').textContent = (data.stage_name || data.name || '?')[0].toUpperCase();
+  document.getElementById('profileName').textContent = data.stage_name || data.name;
+  document.getElementById('profileLocation').textContent = [data.hometown, data.current_city].filter(Boolean).join(' → ') || 'Location not set';
+  
+  document.getElementById('profileStats').innerHTML = [
+    {val: data.years || '—', lbl: 'Years'},
+    {val: data.show_count || '—', lbl: 'Shows'},
+    {val: (data.goals || []).length, lbl: 'Goals'},
+  ].map(s => `<div class="profile-stat"><div class="val">${s.val}</div><div class="lbl">${s.lbl}</div></div>`).join('');
+  
+  if (data.bio) document.getElementById('profileBio').innerHTML = data.bio.replace(/\n\n/g,'<br><br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  if (data.goals) document.getElementById('profileGoals').innerHTML = data.goals.map(g => `<span class="tag">${g}</span>`).join('');
+  if (data.experience) document.getElementById('profileExp').innerHTML = data.experience.map(e => `<span class="tag">${e}</span>`).join('');
+  
+  if (data.links) {
+    document.getElementById('profileLinks').innerHTML = Object.entries(data.links).map(([platform, info]) => `
+      <a href="${info.url}" target="_blank" class="link-card">
+        <div class="platform-icon">${platform === 'spotify' ? '🟢' : platform === 'youtube' ? '🔴' : platform === 'instagram' ? '📷' : platform === 'soundcloud' ? '🟠' : '🔗'}</div>
+        <div>
+          <div class="platform-name">${platform}</div>
+          <div class="platform-stat">${info.followers?.toLocaleString()||''} ${info.followers?'followers':''}</div>
+        </div>
+      </a>`).join('');
+  }
+  
+  if (data.soul) document.getElementById('profileSoul').textContent = data.soul;
+}
+</script>
+</body>
+</html>

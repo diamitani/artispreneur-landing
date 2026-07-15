@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Onboarding — Artispreneur</title>
+<meta name="description" content="Set up your Artispreneur workspace. Tell us your story and we'll build your agent profile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--surface:#111113;--card:#18181b;--border:#252529;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#63636b;--gold:#c9a227;--gold-light:#e0b832;--gold-subtle:rgba(201,162,39,0.08);--accent-green:#22c55e}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+a{color:var(--gold);text-decoration:none}
+
+.wizard{max-width:620px;width:100%}
+.wizard-header{text-align:center;margin-bottom:32px}
+.wizard-header img{height:24px;margin-bottom:16px}
+.wizard-header h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;margin-bottom:4px}
+.wizard-header p{font-size:14px;color:var(--text-muted)}
+
+.progress{display:flex;gap:4px;margin-bottom:24px}
+.progress-bar{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+.progress-bar.done{background:var(--accent-green)}.progress-bar.active{background:var(--gold)}
+
+.step{display:none;animation:fadeIn .4s ease}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:36px}
+.card .emoji{font-size:36px;margin-bottom:16px}
+.card h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:6px}
+.card .subtitle{font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.5}
+
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group small{display:block;font-size:11px;color:var(--text-dim);margin-top:4px}
+
+.chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif;white-space:nowrap}
+.chip:hover{border-color:var(--border-light);color:var(--text)}
+.chip.selected{background:var(--gold-subtle);border-color:var(--gold);color:var(--gold)}
+
+.link-group{margin-bottom:12px}
+.link-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.link-row input{flex:1}
+.link-row .platform{font-size:11px;color:var(--text-dim);min-width:80px;text-align:right}
+.add-link{font-size:12px;color:var(--gold);cursor:pointer;padding:4px 0}
+
+.btn-row{display:flex;gap:10px;margin-top:28px}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 28px;border-radius:10px;font-weight:700;font-size:14px;transition:all .15s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-gold{background:var(--gold);color:var(--bg);flex:1}.btn-gold:hover{background:var(--gold-light)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}.btn-outline:hover{border-color:var(--gold);color:var(--text)}
+
+.summary{display:none;animation:fadeIn .6s ease}
+.summary .soul-block{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;max-height:200px;overflow-y:auto;margin-bottom:16px}
+.summary .bio-block{background:var(--card);border:1px solid var(--gold);border-radius:14px;padding:20px;font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:16px}
+.summary .bio-block h3{color:var(--gold);margin-bottom:8px;font-size:14px}
+.summary .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.stat-box .val{font-size:20px;font-weight:800;color:var(--gold)}.stat-box .lbl{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+
+@media(max-width:500px){.card{padding:24px}.form-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wizard">
+  <div class="wizard-header">
+    <img src="logo.png" alt="A">
+    <h1>Set Up Your Workspace</h1>
+    <p>Tell us your story. We'll build your agent profile, knowledge base, and bio.</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress">
+    <div class="progress-bar active" id="p1"></div>
+    <div class="progress-bar" id="p2"></div>
+    <div class="progress-bar" id="p3"></div>
+    <div class="progress-bar" id="p4"></div>
+    <div class="progress-bar" id="p5"></div>
+  </div>
+
+  <!-- STEP 1: Who Are You? -->
+  <div class="step active" id="step1">
+    <div class="card">
+      <div class="emoji">🎤</div>
+      <h2>Who Are You?</h2>
+      <p class="subtitle">The basics. This builds the foundation of your artist profile.</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" id="firstName" placeholder="Your name"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="lastName"></div>
+      </div>
+      <div class="form-group"><label>Artist / Stage Name</label><input type="text" id="artistName" placeholder="What the world calls you"><small>If different from your real name</small></div>
+      <div class="form-row">
+        <div class="form-group"><label>Hometown</label><input type="text" id="hometown" placeholder="Where you grew up"></div>
+        <div class="form-group"><label>Current City</label><input type="text" id="currentCity" placeholder="Where you live now"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>How many years making music?</label><select id="yearsMusic"><option>Less than 1 year</option><option>1-2 years</option><option>3-5 years</option><option>5-10 years</option><option>10+ years</option></select></div>
+        <div class="form-group"><label>Primary Genre</label><select id="genre"><option>Hip-Hop/Rap</option><option>R&B/Soul</option><option>Pop</option><option>Electronic</option><option>Rock</option><option>Indie/Alternative</option><option>Jazz</option><option>Latin</option><option>Afrobeats</option><option>Country</option><option>Other</option></select></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-gold" onclick="nextStep(2)">Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Your Story -->
+  <div class="step" id="step2">
+    <div class="card">
+      <div class="emoji">📖</div>
+      <h2>Your Story</h2>
+      <p class="subtitle">This is the heart of your artist identity. Be honest — the best bios come from truth.</p>
+      <div class="form-group"><label>Why music? What made you start?</label><textarea id="whyMusic" placeholder="Tell us the moment you knew music was it..."></textarea></div>
+      <div class="form-group"><label>Who are your biggest influences?</label><textarea id="influences" placeholder="Artists, producers, genres, life experiences that shaped your sound..."></textarea></div>
+      <div class="form-group"><label>What's your story? (3-5 sentences)</label><textarea id="story" placeholder="Where you came from, what you've been through, what drives you..."></textarea></div>
+      <div class="form-group"><label>What message do you want your music to convey?</label><input type="text" id="message" placeholder="The theme that runs through everything you create"></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="prevStep(1)">← Back</button>
+        <button class="btn btn-gold" onclick="nextStep(3)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Current Situation -->
+  <div class="step" id="step3">
+    <div class="card">
+      <div class="emoji">💼</div>
+      <h2>Your Current Situation</h2>
+      <p class="subtitle">Be real. This helps us build the right plan for where you actually are.</p>
+      <div class="form-group"><label>What's your work situation?</label><select id="employment"><option>Full-time employed (music is side hustle)</option><option>Part-time employed</option><option>Full-time music / self-employed artist</option><option>Student</option><option>Currently between jobs / unemployed</option><option>Rather not say</option></select></div>
+      <div class="form-row">
+        <div class="form-group"><label>Monthly budget for your music?</label><select id="budget"><option>$0 — grinding with what I have</option><option>$50-200</option><option>$200-500</option><option>$500-1000</option><option>$1000+</option></select></div>
+        <div class="form-group"><label>Living situation</label><select id="living"><option>With family/roommates</option><option>Renting solo</option><option>Own my place</option><option>Rather not say</option></select></div>
+      </div>
+      <div class="form-group"><label>What gear / setup do you have?</label><input type="text" id="gear" placeholder="Laptop, DAW, mic, interface, instruments..."></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="prevStep(2)">← Back</button>
+        <button class="btn btn-gold" onclick="nextStep(4)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Experience -->
+  <div class="step" id="step4">
+    <div class="card">
+      <div class="emoji">🎪</div>
+      <h2>Experience & History</h2>
+      <p class="subtitle">What have you done so far? No judgment — everyone starts somewhere.</p>
+      <div class="form-group"><label>Have you performed live? Select all that apply.</label>
+        <div class="chip-group" id="experienceChips">
+          <span class="chip" onclick="toggleChip(this)">Open mics</span>
+          <span class="chip" onclick="toggleChip(this)">Local gigs / bar shows</span>
+          <span class="chip" onclick="toggleChip(this)">House parties / DIY shows</span>
+          <span class="chip" onclick="toggleChip(this)">Club / venue shows</span>
+          <span class="chip" onclick="toggleChip(this)">Festival performances</span>
+          <span class="chip" onclick="toggleChip(this)">Opened for touring acts</span>
+          <span class="chip" onclick="toggleChip(this)">Headlined my own shows</span>
+          <span class="chip" onclick="toggleChip(this)">Toured (regional or national)</span>
+          <span class="chip" onclick="toggleChip(this)">Not yet — first timer!</span>
+        </div></div>
+      <div class="form-group"><label>How many shows have you done? (estimate)</label><select id="showCount"><option>0 — haven't performed yet</option><option>1-5 shows</option><option>5-20 shows</option><option>20-50 shows</option><option>50+ shows</option></select></div>
+      <div class="form-group"><label>Any press, features, or notable moments?</label><textarea id="press" placeholder="Blog features, interviews, radio play, playlist placements, awards..."></textarea></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="prevStep(3)">← Back</button>
+        <button class="btn btn-gold" onclick="nextStep(5)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Goals + Links -->
+  <div class="step" id="step5">
+    <div class="card">
+      <div class="emoji">🎯</div>
+      <h2>Goals & Music Links</h2>
+      <p class="subtitle">What do you want Artispreneur to help with? Drop your links — we'll build your profile from them.</p>
+      <div class="form-group"><label>What are your goals? Pick all that apply.</label>
+        <div class="chip-group" id="goalChips">
+          <span class="chip" onclick="toggleChip(this)">Register with a PRO / collect royalties</span>
+          <span class="chip" onclick="toggleChip(this)">Get on Spotify/Apple playlists</span>
+          <span class="chip" onclick="toggleChip(this)">License music for TV/film</span>
+          <span class="chip" onclick="toggleChip(this)">Set up an LLC / business entity</span>
+          <span class="chip" onclick="toggleChip(this)">Build my brand / social media</span>
+          <span class="chip" onclick="toggleChip(this)">Book shows / tour</span>
+          <span class="chip" onclick="toggleChip(this)">Get press / media coverage</span>
+          <span class="chip" onclick="toggleChip(this)">Brand deals / sponsorships</span>
+          <span class="chip" onclick="toggleChip(this)">Handle taxes & finances</span>
+          <span class="chip" onclick="toggleChip(this)">Release music professionally</span>
+        </div></div>
+      <div class="form-group"><label>Your Music Links (we'll scrape these for your profile)</label>
+        <div id="linkList">
+          <div class="link-row"><input type="url" placeholder="Spotify artist link..." class="music-link"><span class="platform">Spotify</span></div>
+          <div class="link-row"><input type="url" placeholder="Apple Music link..." class="music-link"><span class="platform">Apple Music</span></div>
+          <div class="link-row"><input type="url" placeholder="SoundCloud link..." class="music-link"><span class="platform">SoundCloud</span></div>
+          <div class="link-row"><input type="url" placeholder="YouTube channel..." class="music-link"><span class="platform">YouTube</span></div>
+          <div class="link-row"><input type="url" placeholder="Instagram profile..." class="music-link"><span class="platform">Instagram</span></div>
+          <div class="link-row"><input type="url" placeholder="Press article / feature..." class="music-link"><span class="platform">Press</span></div>
+        </div>
+        <span class="add-link" onclick="addLink()">+ Add another link</span></div>
+      <div class="form-group"><label>Upload profile photo</label><input type="file" accept="image/*" id="profilePhoto" style="padding:9px"><small>We'll use this for your artist profile and EPK</small></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="prevStep(4)">← Back</button>
+        <button class="btn btn-gold" onclick="finishOnboarding()">✨ Build My Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary" id="summary">
+    <div class="card">
+      <div class="emoji">🎉</div>
+      <h2>Your Profile Is Ready</h2>
+      <p class="subtitle">We've compiled your answers, scraped your links, and provisioned your S3 bucket.</p>
+      <div class="stats" id="summaryStats"></div>
+      <div class="form-group"><label>🧠 Your Knowledge Base (soul.md)</label><div class="soul-block" id="soulOutput"></div></div>
+      <div class="form-group"><label>📝 Your PAL-Generated Bio</label><div class="bio-block" id="bioOutput"></div></div>
+      <a href="workspace.html" class="btn btn-gold" style="width:100%;margin-top:8px">Open Your Workspace →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+
+function nextStep(n) { showStep(n); }
+function prevStep(n) { showStep(n); }
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  currentStep = n;
+  for (let i = 1; i <= 5; i++) {
+    const p = document.getElementById('p'+i);
+    p.classList.remove('done','active');
+    if (i < n) p.classList.add('done');
+    if (i === n) p.classList.add('active');
+  }
+}
+
+function toggleChip(el) { el.classList.toggle('selected'); }
+
+function addLink() {
+  const div = document.createElement('div');
+  div.className = 'link-row';
+  const platform = prompt('Platform name? (e.g. TikTok, Bandcamp, Website)');
+  if (!platform) return;
+  div.innerHTML = `<input type="url" placeholder="${platform} link..." class="music-link"><span class="platform">${platform}</span>`;
+  document.getElementById('linkList').appendChild(div);
+}
+
+function getVal(id) { return document.getElementById(id)?.value?.trim() || ''; }
+function getSelected(parentId) { return Array.from(document.querySelectorAll('#'+parentId+' .chip.selected')).map(c => c.textContent.trim()); }
+
+function scrapeLinks() {
+  // Simulate link scraping — in production this calls AWS Lambda
+  const links = {};
+  document.querySelectorAll('.music-link').forEach(input => {
+    const url = input.value.trim();
+    if (!url) return;
+    const platform = input.parentElement.querySelector('.platform')?.textContent || 'Link';
+    // Simulated scraped data
+    const scraped = {
+      url,
+      platform,
+      followers: Math.floor(Math.random() * 50000),
+      tracks: Math.floor(Math.random() * 30),
+      topTrack: 'Midnight in the Garden',
+      monthlyListeners: Math.floor(Math.random() * 25000),
+    };
+    links[platform.toLowerCase()] = scraped;
+  });
+  return links;
+}
+
+function generateBio() {
+  const name = getVal('artistName') || getVal('firstName') || 'The Artist';
+  const genre = getVal('genre');
+  const hometown = getVal('hometown');
+  const city = getVal('currentCity');
+  const why = getVal('whyMusic');
+  const influences = getVal('influences');
+  const story = getVal('story');
+  const message = getVal('message');
+  const years = getVal('yearsMusic');
+  const experience = getSelected('experienceChips');
+  const press = getVal('press');
+  const links = scrapeLinks();
+  const spotify = links['spotify'];
+  const ig = links['instagram'];
+
+  // PAL-generated bio
+  const expStr = experience.length ? experience.join(', ').toLowerCase() : 'emerging';
+  const influenceStr = influences ? `drawing inspiration from ${influences.split(',')[0] || influences.split('\n')[0]}` : '';
+  
+  return `**${name}** is an ${genre.toLowerCase()} artist ${hometown ? 'from '+hometown : ''}${city && city !== hometown ? ', now based in '+city : ''}. ${years ? 'With '+years.toLowerCase()+' of dedication to their craft' : 'A rising voice in music'}, ${name} creates music that ${message ? message.toLowerCase() : 'speaks to the soul'}.\n\n${story || why}\n\n${influenceStr ? 'Their sound is shaped by '+influences.split(/[,\n]/).slice(0,3).join(', ')+'. ' : ''}${name} brings ${expStr} energy to every performance.\n\n${spotify ? 'Stream their music on Spotify ('+spotify.followers.toLocaleString()+' followers, '+spotify.monthlyListeners.toLocaleString()+' monthly listeners). ' : ''}${ig ? 'Follow their journey on Instagram.' : ''}`;
+}
+
+function generateSoul() {
+  const links = scrapeLinks();
+  const spotify = links['spotify'];
+  return `# Artist: ${getVal('artistName')||getVal('firstName')||'Artist'}
+# Hometown: ${getVal('hometown')}
+# Current City: ${getVal('currentCity')}
+# Genre: ${getVal('genre')}
+# Years in Music: ${getVal('yearsMusic')}
+# Employment: ${getVal('employment')}
+# Budget: ${getVal('budget')}
+# Living: ${getVal('living')}
+# Setup: ${getVal('gear')}
+# Shows: ${getVal('showCount')}
+# Experience: ${getSelected('experienceChips').join(', ')}
+# Influences: ${getVal('influences').split(/[,\n]/).slice(0,5).join(', ')}
+# Message: ${getVal('message')}
+# Goals: ${getSelected('goalChips').join(', ')}
+# Press: ${getVal('press')}
+${spotify ? `# Spotify: ${spotify.followers.toLocaleString()} followers · ${spotify.monthlyListeners.toLocaleString()} monthly listeners · ${spotify.tracks} tracks` : ''}
+# S3 Bucket: s3://artispreneur-outputs/users/${(getVal('artistName')||'artist').toLowerCase().replace(/\s+/g,'-')}/
+# Profile Image: ${document.getElementById('profilePhoto').files[0]?.name || 'uploaded'}
+# Why Music: ${getVal('whyMusic')}
+# Story: ${getVal('story')}`;
+}
+
+function finishOnboarding() {
+  // Hide steps
+  document.querySelectorAll('.step,.progress,.wizard-header').forEach(s => s.style.display = 'none');
+  
+  // Build summary
+  const links = scrapeLinks();
+  const spotify = links['spotify'];
+  const goals = getSelected('goalChips');
+  
+  document.getElementById('summaryStats').innerHTML = `
+    <div class="stat-box"><div class="val">${Object.keys(links).length}</div><div class="lbl">Links Scraped</div></div>
+    <div class="stat-box"><div class="val">${goals.length}</div><div class="lbl">Goals</div></div>
+    <div class="stat-box"><div class="val">${spotify ? spotify.monthlyListeners.toLocaleString() : '—'}</div><div class="lbl">Listeners</div></div>
+  `;
+  document.getElementById('soulOutput').textContent = generateSoul();
+  document.getElementById('bioOutput').innerHTML = '<h3>Your PAL-Generated Bio</h3>' + generateBio().replace(/\n\n/g, '<br><br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  document.getElementById('summary').style.display = 'block';
+  
+  // Simulate S3 provisioning
+  console.log('S3 bucket provisioned:', 's3://artispreneur-outputs/users/' + (getVal('artistName')||'artist').toLowerCase().replace(/\s+/g,'-') + '/');
+  console.log('Knowledge base saved. Links scraped:', Object.keys(links).length);
+}
+</script>
+</body>
+</html>
