@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Skill Builder — Artispreneur</title>
+<meta name="description" content="Build custom agent skills from your artist profile. Generate EPKs, contracts, splitsheets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--surface:#111113;--card:#18181b;--border:#252529;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#63636b;--gold:#c9a227;--gold-light:#e0b832;--gold-subtle:rgba(201,162,39,0.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--gold);text-decoration:none}
+.container{max-width:1000px;margin:0 auto;padding:0 24px}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border)}
+.navbar img{height:20px}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{color:var(--text-muted);font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+main{padding:40px 0 80px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,36px);font-weight:900;margin-bottom:4px}
+.sub{font-size:14px;color:var(--text-muted);margin-bottom:32px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+.card h3{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+.skill-form label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.skill-form input,.skill-form select,.skill-form textarea{width:100%;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;margin-bottom:12px;resize:vertical}
+.skill-form input:focus,.skill-form select:focus,.skill-form textarea:focus{outline:none;border-color:var(--gold)}
+.chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:500;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .1s;font-family:'Inter',sans-serif}
+.chip.selected{background:var(--gold-subtle);border-color:var(--gold);color:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:8px;font-weight:700;font-size:13px;transition:all .15s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-gold{background:var(--gold);color:var(--bg)}.btn-gold:hover{background:var(--gold-light)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}.btn-outline:hover{border-color:var(--gold)}
+.preview{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;max-height:200px;overflow-y:auto;line-height:1.6}
+.output-list{display:flex;flex-direction:column;gap:10px}
+.output-card{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;transition:border .15s;cursor:pointer}
+.output-card:hover{border-color:var(--gold)}
+.output-card .info{display:flex;align-items:center;gap:12px}
+.output-card .icon{font-size:24px}
+.output-card .name{font-weight:600;font-size:13px}
+.output-card .meta{font-size:11px;color:var(--text-dim)}
+.webhook-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'Geist Mono',monospace;font-size:12px;color:var(--text-dim);word-break:break-all;margin-top:8px}
+@media(max-width:700px){.grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="navbar">
+  <a href="index.html"><img src="logo.png" alt="A"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="workspace.html">Workspace</a>
+    <a href="academy.html">Academy</a>
+    <a href="skills.html">Skill Builder</a>
+  </div>
+</div>
+
+<main class="container">
+  <h1>Skill Builder</h1>
+  <p class="sub">Create custom agent skills from your artist profile. Generate EPKs, contracts, and splitsheets — download as PDF or send via webhook.</p>
+
+  <div class="grid-2">
+    <!-- SKILL CREATOR -->
+    <div>
+      <div class="card">
+        <h3>⚙ Create a Skill</h3>
+        <p>Build a custom agent skill that uses your profile data. Skills are JSON manifests your agent can execute.</p>
+        <div class="skill-form">
+          <label>Skill Name</label>
+          <input type="text" id="skillName" placeholder="e.g. Release Day EPK Generator">
+          <label>What does it do?</label>
+          <input type="text" id="skillDesc" placeholder="e.g. Generates an EPK with bio, links, and press photos">
+          <label>Category</label>
+          <select id="skillCat"><option>Release</option><option>Promotion</option><option>Legal</option><option>Finance</option><option>Creative</option></select>
+          <label>Tools to include</label>
+          <div class="chip-group" id="toolChips">
+            <span class="chip" onclick="this.classList.toggle('selected')">Bio Generator</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Link Scraper</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">EPK Builder</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Splitsheet Generator</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Contract Generator</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Metadata Extractor</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Revenue Analysis</span>
+            <span class="chip" onclick="this.classList.toggle('selected')">Playlist Finder</span>
+          </div>
+          <button class="btn btn-gold" onclick="buildSkill()" style="width:100%">Build Skill Manifest</button>
+        </div>
+        <div class="preview" id="skillPreview" style="margin-top:12px;display:none"></div>
+      </div>
+    </div>
+
+    <!-- GENERATE OUTPUTS -->
+    <div>
+      <div class="card">
+        <h3>📄 Generate & Download</h3>
+        <p>Create downloadable documents from your profile in real-time. No backend needed — generates instantly in your browser.</p>
+        <div class="output-list">
+          <div class="output-card" onclick="generatePDF('epk')">
+            <div class="info"><span class="icon">📋</span><div><div class="name">Electronic Press Kit (EPK)</div><div class="meta">Bio, links, discography, press photos</div></div></div>
+            <span class="btn btn-gold" style="font-size:11px;padding:6px 14px">Generate PDF</span>
+          </div>
+          <div class="output-card" onclick="generatePDF('splitsheet')">
+            <div class="info"><span class="icon">📊</span><div><div class="name">Splitsheet Agreement</div><div class="meta">Track ownership, percentages, collaborators</div></div></div>
+            <span class="btn btn-gold" style="font-size:11px;padding:6px 14px">Generate PDF</span>
+          </div>
+          <div class="output-card" onclick="generatePDF('contract')">
+            <div class="info"><span class="icon">📄</span><div><div class="name">Producer Agreement</div><div class="meta">Standard music production contract</div></div></div>
+            <span class="btn btn-gold" style="font-size:11px;padding:6px 14px">Generate PDF</span>
+          </div>
+          <div class="output-card" onclick="generatePDF('release-plan')">
+            <div class="info"><span class="icon">📅</span><div><div class="name">Release Strategy Plan</div><div class="meta">Timeline, milestones, promotion checklist</div></div></div>
+            <span class="btn btn-gold" style="font-size:11px;padding:6px 14px">Generate PDF</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Webhook Endpoint</h3>
+        <p>For backend PDF generation, POST your skill data to this endpoint. Your backend creates the PDF, saves to S3, and returns the URL.</p>
+        <label style="font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:4px;display:block">Webhook URL</label>
+        <div class="webhook-box">POST https://api.artispreneur.com/v1/skills/generate</div>
+        <label style="font-size:11px;font-weight:600;color:var(--text-dim);margin:8px 0 4px;display:block">Payload</label>
+        <div class="webhook-box">{ "skill_type": "epk", "artist_data": {...}, "format": "pdf" }</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function buildSkill() {
+  const name = document.getElementById('skillName').value || 'Custom Skill';
+  const desc = document.getElementById('skillDesc').value || 'Agent skill';
+  const cat = document.getElementById('skillCat').value;
+  const tools = Array.from(document.querySelectorAll('#toolChips .chip.selected')).map(c=>c.textContent.trim());
+  const manifest = {
+    name, description: desc, category: cat,
+    version: "1.0",
+    tools: tools,
+    trigger_keywords: [name.toLowerCase()],
+    agent_type: cat === 'Legal' ? 'legal' : cat === 'Finance' ? 'finance' : 'manager',
+    created_from: 'Artispreneur Skill Builder',
+  };
+  const yaml = `# ${name}\ndescription: "${desc}"\ncategory: ${cat}\nversion: "1.0"\ntools:\n${tools.map(t=>'  - '+t).join('\n')}\nagent_type: ${manifest.agent_type}\ntrigger_keywords:\n  - ${name.toLowerCase()}`;
+  const preview = document.getElementById('skillPreview');
+  preview.style.display = 'block';
+  preview.textContent = yaml;
+  // Also save to localStorage
+  const skills = JSON.parse(localStorage.getItem('artispreneur_skills') || '[]');
+  skills.push(manifest);
+  localStorage.setItem('artispreneur_skills', JSON.stringify(skills));
+}
+
+function generatePDF(type) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const name = (localStorage.getItem('artispreneur_profile') && JSON.parse(localStorage.getItem('artispreneur_profile')).stage_name) || 'Artist Name';
+  const brand = 'Artispreneur';
+  
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.setTextColor(201, 162, 39);
+  doc.text(brand, 20, 30);
+  doc.setFontSize(10);
+  doc.setTextColor(100, 100, 100);
+  doc.text('Art Means Business', 20, 38);
+  
+  if (type === 'epk') {
+    doc.setFontSize(20);
+    doc.setTextColor(20, 20, 20);
+    doc.text('Electronic Press Kit', 20, 55);
+    doc.setFontSize(14);
+    doc.text(name, 20, 68);
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text('Bio: [Generated from your onboarding answers]', 20, 82);
+    doc.text('Genre: [From profile]', 20, 92);
+    doc.text('Location: [From profile]', 20, 102);
+    doc.text('Links: Spotify | Apple Music | Instagram | YouTube', 20, 112);
+    doc.text('Press: [From scraped press mentions]', 20, 122);
+    doc.text('---', 20, 135);
+    doc.text('Generated by Artispreneur Skill Builder', 20, 145);
+  } else if (type === 'splitsheet') {
+    doc.setFontSize(18);
+    doc.setTextColor(20, 20, 20);
+    doc.text('Splitsheet Agreement', 20, 55);
+    doc.setFontSize(11);
+    doc.text(`Track: [Track Title]`, 20, 70);
+    doc.text(`Artist: ${name}`, 20, 80);
+    doc.text('Collaborators:', 20, 95);
+    doc.text('  1. [Name] — [Role] — [Percentage]%', 25, 105);
+    doc.text('  2. [Name] — [Role] — [Percentage]%', 25, 115);
+    doc.text('Total: 100%', 20, 130);
+    doc.text('---', 20, 145);
+    doc.text('Generated by Artispreneur Legal Agent', 20, 155);
+  } else if (type === 'contract') {
+    doc.setFontSize(18);
+    doc.setTextColor(20, 20, 20);
+    doc.text('Producer Agreement', 20, 55);
+    doc.setFontSize(10);
+    doc.text(`This Agreement is made between ${name} ("Artist") and [Producer Name] ("Producer").`, 20, 70);
+    doc.text('1. Services: Producer agrees to provide production services.', 20, 85);
+    doc.text('2. Compensation: [Amount or percentage].', 20, 95);
+    doc.text('3. Rights: [Ownership split details].', 20, 105);
+    doc.text('4. Credit: Producer shall receive appropriate credit.', 20, 115);
+    doc.text('5. Term: This agreement is effective as of [Date].', 20, 125);
+    doc.text('---', 20, 140);
+    doc.text('Generated by Artispreneur Legal Agent', 20, 150);
+  } else if (type === 'release-plan') {
+    doc.setFontSize(18);
+    doc.setTextColor(20, 20, 20);
+    doc.text('Release Strategy Plan', 20, 55);
+    doc.setFontSize(10);
+    doc.text(`Artist: ${name}`, 20, 68);
+    doc.text('Timeline:', 20, 80);
+    ['Week 1-2: Pre-release — teasers, pre-save campaign','Week 3: Release day — social media blitz, playlist pitch','Week 4: Post-release — follow-up, content, analytics','Week 5-8: Sustain — engagement, new content, press'].forEach((s,i)=>doc.text(`  ${s}`,20,90+i*10));
+    doc.text('---', 20, 140);
+    doc.text('Generated by Artispreneur Manager Agent', 20, 150);
+  }
+  
+  doc.save(`${type}_${name.replace(/\s+/g,'_')}_Artispreneur.pdf`);
+}
+</script>
+</body>
+</html>
