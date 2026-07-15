@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login — Artispreneur</title>
+<meta name="description" content="Sign into your Artispreneur workspace.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#09090b;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e0b832;--gold-subtle:rgba(201,162,39,0.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--black);color:var(--text);line-height:1.6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+a{color:var(--gold);text-decoration:none}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:40px;max-width:420px;width:100%;text-align:center}
+.card img{height:28px;margin-bottom:20px}
+.card h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;margin-bottom:4px}
+.card p{font-size:13px;color:var(--text-muted);margin-bottom:28px}
+.form-group{margin-bottom:16px;text-align:left}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:5px}
+.form-group input{width:100%;padding:12px 14px;background:var(--black);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;transition:border .2s}
+.form-group input:focus{outline:none;border-color:var(--gold)}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:13px;border-radius:10px;font-weight:700;font-size:14px;transition:all .15s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-gold{background:var(--gold);color:var(--black);margin-top:4px}.btn-gold:hover{background:var(--gold-light)}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--black);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;font-family:'Inter',sans-serif}.google-btn:hover{background:var(--card)}
+.divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--text-dim);font-size:11px}.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.links{display:flex;justify-content:center;gap:16px;margin-top:20px;font-size:12px;color:var(--text-dim)}
+.links a{color:var(--text-dim)}.links a:hover{color:var(--gold)}
+.back-link{text-align:center;margin-top:20px;font-size:13px;color:var(--text-dim)}
+.back-link a{color:var(--text-dim)}.back-link a:hover{color:var(--gold)}
+.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px;font-size:12px;color:#ef4444;margin-bottom:16px;display:none}
+</style>
+</head>
+<body>
+<div>
+  <div class="card">
+    <a href="index.html"><img src="logo.png" alt="Artispreneur"></a>
+    <h1>Welcome back</h1>
+    <p>Sign into your workspace to continue where you left off.</p>
+    <button class="google-btn" onclick="alert('Google OAuth via Cognito — coming soon')">
+      <span style="font-size:16px">G</span> Continue with Google
+    </button>
+    <div class="divider">or use email</div>
+    <div id="loginError" class="error"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn btn-gold" onclick="doLogin()">Sign In →</button>
+    <div class="links">
+      <a href="signup.html">Create account</a>
+      <span>·</span>
+      <a href="#">Forgot password?</a>
+    </div>
+  </div>
+  <div class="back-link"><a href="index.html">← Back to Artispreneur</a></div>
+</div>
+
+<script>
+function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const err = document.getElementById('loginError');
+  if (!email || !password) {
+    err.textContent = 'Please enter your email and password.';
+    err.style.display = 'block';
+    return;
+  }
+  if (password.length < 8) {
+    err.textContent = 'Invalid credentials. Please try again.';
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+  // Simulate login — in production: Cognito authenticate
+  localStorage.setItem('artispreneur_logged_in', 'true');
+  window.location.href = 'workspace.html';
+}
+</script>
+</body>
+</html>
