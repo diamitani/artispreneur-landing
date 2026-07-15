@@ -2,361 +2,494 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard — Artispreneur OS</title>
-<meta name="description" content="Your Artispreneur workspace — AI agents, academy, directory, outputs, and knowledge base.">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Workspace — Artispreneur OS</title>
+<meta name="description" content="Your AI agent workspace. Chat, skills, prompts, and outputs — all in one place.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--black:#09090b;--surface:#18181b;--card:#1c1c1f;--border:#27272a;--border-light:#3f3f46;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#71717a;--gold:#c9a227;--gold-light:#e8c84a;--gold-muted:rgba(201,162,39,0.1);--green:#22c55e;--green-muted:rgba(34,197,94,0.12);--blue:#3b82f6;--purple:#a855f7;--orange:#f97316;--cyan:#06b6d2;--red:#ef4444}
+:root{--bg:#09090b;--surface:#111113;--card:#18181b;--border:#252529;--border-light:#333338;--text:#fafafa;--text-muted:#a1a1aa;--text-dim:#63636b;--gold:#c9a227;--gold-light:#e0b832;--gold-subtle:rgba(201,162,39,0.08);--gold-glow:rgba(201,162,39,0.15);--accent-red:#ef4444;--accent-green:#22c55e;--accent-blue:#3b82f6;--accent-purple:#a855f7;--accent-cyan:#06b6d2;--accent-orange:#f97316;--radius:10px;--radius-lg:16px}
 *{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-font-smoothing:antialiased}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--text);line-height:1.5;overflow:hidden;height:100vh}
-a{color:inherit;text-decoration:none}
-.dashboard{display:grid;grid-template-columns:230px 1fr;height:100vh}
-.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:16px 0}
-.sidebar-logo{padding:0 16px 14px;border-bottom:1px solid var(--border);margin-bottom:8px}
-.sidebar-logo img{height:20px}
-.sidebar-section{padding:6px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-top:4px}
-.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;margin:1px 6px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .1s;cursor:pointer;border:none;background:none;width:calc(100% - 12px);text-align:left;font-family:'Inter',sans-serif}
-.sidebar-item:hover{background:var(--card);color:var(--text)}
-.sidebar-item.active{background:var(--gold-muted);color:var(--gold)}
-.sidebar-item .badge{font-size:10px;padding:1px 6px;border-radius:100px;margin-left:auto;background:var(--card);color:var(--text-dim)}
-.sidebar-item .badge.live{background:var(--green-muted);color:var(--green)}
-.sidebar-item .badge.free{background:var(--gold-muted);color:var(--gold);font-size:9px;padding:1px 5px}
-.sidebar-footer{margin-top:auto;padding:14px 16px;border-top:1px solid var(--border)}
-.sidebar-user{display:flex;align-items:center;gap:8px}
-.sidebar-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-muted);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.sidebar-user .name{font-size:12px;font-weight:600}.sidebar-user .plan{font-size:10px;color:var(--gold)}
+html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);font-size:13px}
+a{color:var(--gold);text-decoration:none}
+input,textarea,button{font-family:'Inter',sans-serif}
+::selection{background:var(--gold-subtle);color:var(--gold)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--border-light)}
 
-.main{overflow-y:auto;padding:24px 32px}
-.main-section{display:none}
-.main-section.active{display:block}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-.topbar h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;letter-spacing:-.5px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
-.btn-gold{background:var(--gold);color:var(--black)}.btn-gold:hover{background:var(--gold-light)}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}.btn-outline:hover{border-color:var(--border-light);color:var(--text);background:var(--surface)}
+.app{display:grid;grid-template-columns:240px 1fr 0px;height:100vh;transition:grid-template-columns .3s ease}
+.app.context-open{grid-template-columns:240px 1fr 320px}
 
-/* Home */
-.home-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
-.chat-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;height:calc(100vh - 140px)}
-.chat-panel-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
-.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5;animation:fadeIn .2s ease}
-.chat-msg.agent{background:var(--card);color:var(--text-muted);align-self:flex-start;border-bottom-left-radius:4px}
-.chat-msg.user{background:var(--gold-muted);color:var(--gold);align-self:flex-end;border-bottom-right-radius:4px}
-.chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
-.chat-input-row input{flex:1;padding:10px 14px;background:var(--black);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif}
-.chat-input-row input:focus{outline:none;border-color:var(--gold)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.right-panels{display:flex;flex-direction:column;gap:16px}
-.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
-.info-card h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.agent-status-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
-.agent-status-row:last-child{border-bottom:none}
-.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.status-dot.on{background:var(--green)}.status-dot.off{background:var(--text-dim)}
-.quick-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat-mini{text-align:center;padding:10px;background:var(--card);border-radius:8px}
-.stat-mini .n{font-size:18px;font-weight:800}
-.stat-mini .l{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+/* SIDEBAR */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-header{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--border)}
+.sidebar-header img{height:20px}
+.sidebar-header .brand{font-family:'Playfair Display',serif;font-size:15px;font-weight:800;letter-spacing:-.5px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px}
+.nav-section{padding:8px 8px 4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 12px;margin:1px 0;border-radius:7px;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .1s;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:var(--card);color:var(--text)}
+.nav-item.active{background:var(--gold-subtle);color:var(--gold)}
+.nav-item .badge{font-size:10px;padding:1px 6px;border-radius:100px;margin-left:auto;background:var(--card);color:var(--text-dim)}
+.nav-item .badge.on{background:rgba(34,197,94,.12);color:var(--accent-green)}
+.sidebar-footer{padding:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
 
-/* Agents */
-.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;transition:all .15s}
-.agent-card:hover{border-color:var(--border-light)}
-.agent-card .agent-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.agent-card .agent-name{font-size:14px;font-weight:700}
-.agent-card .agent-last{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:12px}
-.agent-actions{display:flex;gap:6px;flex-wrap:wrap}
-.agent-btn{font-size:11px;padding:5px 10px;border-radius:5px;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all .1s}
-.agent-btn:hover{border-color:var(--gold);color:var(--gold)}
-.agent-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
-.agent-badge.active{background:var(--green-muted);color:var(--green)}
-.agent-badge.locked{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
-.agent-card.locked{opacity:.6;position:relative}
-.agent-card.locked::after{content:'🔒 Upgrade to unlock';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--black);padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap}
+/* MAIN */
+.main{display:flex;flex-direction:column;overflow:hidden;position:relative}
+.main-toolbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);min-height:49px}
+.main-toolbar .title{font-size:14px;font-weight:700}
+.main-toolbar .agent-select{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:7px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .1s}
+.main-toolbar .agent-select:hover{border-color:var(--border-light)}
+.agent-avatar{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.agent-avatar.pro{background:rgba(201,162,39,.15);color:var(--gold)}.agent-avatar.dist{background:rgba(34,197,94,.15);color:var(--accent-green)}.agent-avatar.lic{background:rgba(168,85,247,.15);color:var(--accent-purple)}.agent-avatar.legal{background:rgba(59,130,246,.15);color:var(--accent-blue)}.agent-avatar.fin{background:rgba(6,182,210,.15);color:var(--accent-cyan)}.agent-avatar.mgr{background:rgba(249,115,22,.15);color:var(--accent-orange)}
 
-/* Academy */
-.academy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.academy-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all .12s}
-.academy-card:hover{border-color:var(--border-light)}
-.academy-card .cat{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;margin-bottom:8px;display:inline-block;text-transform:uppercase}
-.academy-card h3{font-size:13px;font-weight:700;line-height:1.3;margin-bottom:6px}
-.academy-card .lessons{font-size:11px;color:var(--text-dim)}
-.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.filter-chip{font-size:11px;padding:4px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .1s;font-family:'Inter',sans-serif}
-.filter-chip:hover,.filter-chip.on{background:var(--gold-muted);border-color:var(--gold);color:var(--gold)}
+/* CHAT */
+.chat-container{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+.chat-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.chat-empty h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;margin-bottom:8px}
+.chat-empty p{font-size:14px;color:var(--text-muted);max-width:400px;line-height:1.6}
+.chat-empty .suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+.suggestion{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:8px 18px;font-size:12px;color:var(--text-muted);cursor:pointer;transition:all .15s}
+.suggestion:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-subtle)}
 
-/* Directory */
-.dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.dir-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .12s;cursor:pointer}
-.dir-card:hover{border-color:var(--gold)}
-.dir-card h3{font-size:15px;font-weight:700;margin-bottom:4px}
-.dir-card .count{font-size:28px;font-weight:800;color:var(--gold)}
-.dir-card .desc{font-size:12px;color:var(--text-muted);margin-top:6px}
-.dir-search{margin-bottom:20px}
-.dir-search input{width:100%;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif}
-.dir-search input:focus{outline:none;border-color:var(--gold)}
+.message{display:flex;gap:14px;max-width:740px;animation:msgIn .25s ease}
+.message.agent{align-self:flex-start}.message.user{align-self:flex-end;flex-direction:row-reverse}
+.message .avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.message.user .avatar{background:var(--gold-subtle);color:var(--gold)}
+.message .bubble{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 18px;font-size:13.5px;line-height:1.6;color:var(--text-muted)}
+.message.user .bubble{background:var(--gold-subtle);border-color:var(--gold-glow);color:var(--text)}
+.message .bubble p{margin:6px 0}
+.message .bubble p:first-child{margin-top:0}
+.message .bubble code{background:var(--bg);padding:2px 6px;border-radius:4px;font-family:'Geist Mono',monospace;font-size:12px}
+.message .time{font-size:10px;color:var(--text-dim);margin-top:8px}
+.typing{display:flex;align-items:center;gap:4px;padding:8px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--text-dim);animation:bounce 1.4s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
 
-/* Outputs */
-.outputs-list{display:flex;flex-direction:column;gap:0}
-.output-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);font-size:13px}
-.output-row .file-info{flex:1;display:flex;align-items:center;gap:12px}
-.output-row .file-name{font-weight:600}.output-row .file-meta{font-size:11px;color:var(--text-dim)}
-.tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600}
-.tag.draft{background:rgba(168,85,247,0.12);color:var(--purple)}
-.tag.final{background:var(--green-muted);color:var(--green)}
+/* CHAT INPUT */
+.chat-footer{border-top:1px solid var(--border);padding:16px 20px}
+.chat-input-wrap{display:flex;align-items:flex-end;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:8px 14px;transition:border-color .2s}
+.chat-input-wrap:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-subtle)}
+.chat-input-wrap textarea{flex:1;background:none;border:none;color:var(--text);font-size:13.5px;line-height:1.5;resize:none;outline:none;padding:6px 0;max-height:120px;font-family:'Inter',sans-serif}
+.chat-input-wrap textarea::placeholder{color:var(--text-dim)}
+.send-btn{width:34px;height:34px;border-radius:9px;border:none;background:var(--gold);color:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.send-btn:hover{background:var(--gold-light)}
+.send-btn:disabled{opacity:.3;cursor:default}
+.char-count{font-size:10px;color:var(--text-dim);padding:4px 16px 0;text-align:right}
 
-/* Upgrade prompt */
-.upgrade-banner{background:var(--gold-muted);border:1px solid var(--gold);border-radius:12px;padding:20px 24px;text-align:center;margin-bottom:20px}
-.upgrade-banner h3{font-size:16px;font-weight:700;color:var(--gold);margin-bottom:6px}
-.upgrade-banner p{font-size:13px;color:var(--text-muted);margin-bottom:12px}
-.upgrade-banner .btn{display:inline-flex}
+/* CONTEXT PANEL */
+.context-panel{background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;display:none}
+.app.context-open .context-panel{display:block}
+.context-section{padding:16px;border-bottom:1px solid var(--border)}
+.context-section h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:10px}
+.context-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:6px;font-size:12px;cursor:pointer;transition:all .1s}
+.context-card:hover{border-color:var(--border-light)}
+.context-card .title{font-weight:600;margin-bottom:2px}
+.context-card .meta{font-size:10px;color:var(--text-dim)}
 
-@media(max-width:1024px){.dashboard{grid-template-columns:1fr}.sidebar{display:none}.home-grid{grid-template-columns:1fr}.agent-grid{grid-template-columns:1fr 1fr}.academy-grid{grid-template-columns:1fr 1fr 1fr}.dir-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.main{padding:14px}.agent-grid,.academy-grid,.dir-grid{grid-template-columns:1fr}}
+/* COMMAND PALETTE */
+.cmd-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding-top:15vh}
+.cmd-overlay.open{display:flex}
+.cmd-palette{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:560px;max-height:400px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.cmd-palette input{width:100%;padding:16px 20px;background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:16px;outline:none;font-family:'Inter',sans-serif}
+.cmd-results{max-height:300px;overflow-y:auto}
+.cmd-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;transition:all .08s}
+.cmd-item:hover,.cmd-item.selected{background:var(--card)}
+.cmd-item .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--card)}
+.cmd-item .info{flex:1}.cmd-item .info .name{font-size:13px;font-weight:600}.cmd-item .info .desc{font-size:11px;color:var(--text-dim)}
+.cmd-item .shortcut{font-size:10px;color:var(--text-dim);background:var(--bg);padding:2px 6px;border-radius:4px;font-family:'Geist Mono',monospace}
+
+/* SKILLS OVERLAY */
+.skills-panel{position:absolute;inset:0;background:var(--bg);z-index:10;display:none;flex-direction:column}
+.skills-panel.open{display:flex}
+.skills-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.skills-header h3{font-size:15px;font-weight:700}
+.skills-search{width:100%;padding:10px 16px;background:var(--card);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:14px;outline:none}
+.skills-grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:start}
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .1s}
+.skill-card:hover{border-color:var(--gold)}
+.skill-card .skill-icon{font-size:18px;margin-bottom:8px}
+.skill-card .skill-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.skill-card .skill-desc{font-size:11px;color:var(--text-dim);line-height:1.4}
+.skill-card .skill-meta{display:flex;gap:8px;margin-top:8px;font-size:10px;color:var(--text-dim)}
+.skill-card .install-btn{margin-top:10px;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif}
+.skill-card .install-btn:hover{border-color:var(--gold);color:var(--gold)}
+.skill-card .install-btn.installed{background:var(--gold-subtle);border-color:var(--gold);color:var(--gold)}
+
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-muted);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;padding:6px 10px;border-radius:6px}
+.back-btn:hover{color:var(--text);background:var(--card)}
+
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{display:none}.app.context-open{grid-template-columns:1fr}.context-panel{position:fixed;right:0;top:0;bottom:0;width:300px;z-index:20}}
 </style>
 </head>
 <body>
-<div class="dashboard">
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-logo"><a href="index.html"><img src="logo.png" alt="Artispreneur"></a></div>
-    <div class="sidebar-section">Workspace</div>
-    <button class="sidebar-item active" onclick="showSection('home',this)">⌂ Home</button>
-    <button class="sidebar-item" onclick="showSection('agents',this)">◈ Agents <span class="badge live">4 active</span></button>
 
-    <div class="sidebar-section">Free Tools</div>
-    <button class="sidebar-item" onclick="showSection('academy',this)">🎓 Academy <span class="badge free">Free</span></button>
-    <button class="sidebar-item" onclick="showSection('directory',this)">◉ Directory <span class="badge free">Free</span></button>
-    <button class="sidebar-item" onclick="showSection('outputs',this)">📁 Outputs <span class="badge">5</span></button>
-    <button class="sidebar-item" onclick="showSection('knowledge',this)">📚 Knowledge Base</button>
-
-    <div class="sidebar-section">Account</div>
-    <button class="sidebar-item" onclick="showSection('settings',this)">⚙ Settings</button>
-    <a href="pricing.html" class="sidebar-item">💎 Upgrade Plan</a>
-    <a href="index.html" class="sidebar-item">← Back to Site</a>
-
+<div class="app" id="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="logo.png" alt="A"><span class="brand"><span style="color:var(--gold)">Artis</span>preneur</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Workspace</div>
+      <button class="nav-item active" onclick="switchView('chat')">⌂ Chat</button>
+      <button class="nav-item" onclick="switchView('agents')">◈ Agents <span class="badge on">4 on</span></button>
+      <button class="nav-item" onclick="openSkills()">⚙ Skills <span class="badge">12</span></button>
+      <button class="nav-item" onclick="switchView('outputs')">📁 Outputs <span class="badge">5</span></button>
+      <div class="nav-section" style="margin-top:8px">Library</div>
+      <button class="nav-item" onclick="switchView('prompts')">✦ Prompts</button>
+      <button class="nav-item" onclick="switchView('knowledge')">📚 Knowledge</button>
+      <button class="nav-item" onclick="switchView('academy')">🎓 Academy</button>
+      <button class="nav-item" onclick="switchView('directory')">◉ Directory</button>
+      <div class="nav-section" style="margin-top:8px">Account</div>
+      <button class="nav-item" onclick="switchView('settings')">⚙ Settings</button>
+      <a href="index.html" class="nav-item">← Exit</a>
+    </nav>
     <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="sidebar-avatar">M</div>
-        <div><div class="name">Midnight</div><div class="plan">Free Plan</div></div>
-      </div>
+      <div class="agent-avatar pro" style="width:26px;height:26px;border-radius:7px">M</div>
+      <div><div style="font-size:12px;font-weight:600">Midnight</div><div style="font-size:10px;color:var(--text-dim)">Free Plan</div></div>
     </div>
-  </nav>
+  </aside>
 
-  <main class="main" id="mainContent">
-
-    <!-- HOME -->
-    <div class="main-section active" id="section-home">
-      <div class="topbar"><h1>Dashboard</h1><a href="pricing.html" class="btn btn-gold">Upgrade to BYOK</a></div>
-      <div class="home-grid">
-        <div class="chat-panel">
-          <div class="chat-panel-header">💬 Agent Chat</div>
-          <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg agent">Welcome back, Midnight! 👋<br><br>Here's what's happening:<br>• PRO Agent registered "Gold Hour" with BMI<br>• Distribution Agent submitted to 3 new playlists<br>• Legal Agent has your LLC docs ready for review<br><br>What should we work on today?</div>
+  <!-- MAIN -->
+  <main class="main">
+    <!-- CHAT VIEW -->
+    <div id="view-chat" style="display:flex;flex-direction:column;height:100%">
+      <div class="main-toolbar">
+        <span class="title">Agent Chat</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="agent-select" id="agentSelect" onclick="cycleAgent()">
+            <div class="agent-avatar mgr" id="agentAvatar">◎</div>
+            <span id="agentName" style="font-size:12px;font-weight:600">Manager</span>
+            <span style="font-size:10px;color:var(--text-dim)">⌘1-6</span>
           </div>
-          <div class="chat-input-row">
-            <input type="text" id="chatInput" placeholder="Ask your agent anything..." onkeydown="if(event.key==='Enter')sendDashboardChat()">
-            <button class="btn btn-gold" onclick="sendDashboardChat()">Send</button>
-          </div>
-        </div>
-        <div class="right-panels">
-          <div class="info-card">
-            <h4>◈ Agent Status</h4>
-            <div class="agent-status-row"><span>PRO Agent</span><span class="status-dot on"></span></div>
-            <div class="agent-status-row"><span>Distribution Agent</span><span class="status-dot on"></span></div>
-            <div class="agent-status-row"><span>Licensing Agent</span><span class="status-dot off"></span></div>
-            <div class="agent-status-row"><span>Legal Agent</span><span class="status-dot on"></span></div>
-            <div class="agent-status-row"><span>Finance Agent</span><span class="status-dot off"></span></div>
-            <div class="agent-status-row"><span>Manager Agent</span><span class="status-dot on"></span></div>
-          </div>
-          <div class="quick-stats">
-            <div class="stat-mini"><div class="n">14</div><div class="l">Catalog</div></div>
-            <div class="stat-mini"><div class="n">$1.2k</div><div class="l">Royalties</div></div>
-            <div class="stat-mini"><div class="n">23</div><div class="l">Actions</div></div>
-            <div class="stat-mini"><div class="n">3</div><div class="l">Projects</div></div>
-          </div>
-          <div class="info-card">
-            <h4>📋 Recent Activity</h4>
-            <div style="font-size:11px;color:var(--text-dim);line-height:2">
-              <div>2h ago — PRO: Registered "Gold Hour"</div>
-              <div>4h ago — Dist: Submitted to playlists</div>
-              <div>Yesterday — Legal: LLC docs generated</div>
-            </div>
-          </div>
+          <button class="back-btn" onclick="toggleContext()" style="font-size:12px">⚡ Context</button>
         </div>
       </div>
-    </div>
-
-    <!-- AGENTS -->
-    <div class="main-section" id="section-agents">
-      <div class="topbar"><h1>Agents</h1><span style="font-size:12px;color:var(--text-dim)">4 of 6 active on Free plan</span></div>
-      <div class="upgrade-banner">
-        <h3>🔒 Licensing & Finance Agents Locked</h3>
-        <p>Upgrade to BYOK or Pro to unlock all 6 agents with unlimited usage.</p>
-        <a href="pricing.html" class="btn btn-gold">Upgrade →</a>
+      <div class="chat-container" id="chatContainer">
+        <div class="chat-empty" id="chatEmpty">
+          <h2>What do you need?</h2>
+          <p>I'm your Manager Agent. I can handle anything — or route you to a specialist.</p>
+          <div class="suggestions">
+            <button class="suggestion" onclick="sendSuggestion('Register my new song with BMI')">🎵 Register my new song</button>
+            <button class="suggestion" onclick="sendSuggestion('Find playlists for my genre')">📀 Get on playlists</button>
+            <button class="suggestion" onclick="sendSuggestion('Help me set up an LLC')">⚖️ Set up an LLC</button>
+            <button class="suggestion" onclick="sendSuggestion('Analyze my streaming revenue')">💰 Revenue analysis</button>
+            <button class="suggestion" onclick="sendSuggestion('Create a splitsheet for my track')">📋 Create splitsheet</button>
+            <button class="suggestion" onclick="sendSuggestion('Find sync licensing opportunities')">🎬 Sync licensing</button>
+          </div>
+        </div>
+        <div id="chatMessages"></div>
       </div>
-      <div class="agent-grid">
-        <div class="agent-card"><div class="agent-top"><span class="agent-name">♩ PRO Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Catalog: 14 works · BMI registered · $1,240 royalties YTD</div><div class="agent-actions"><button class="agent-btn">Register Song</button><button class="agent-btn">Splitsheet</button><button class="agent-btn">View Catalog</button></div></div>
-        <div class="agent-card"><div class="agent-top"><span class="agent-name">↗ Distribution Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Submitted to 8 playlists · New single on Spotify, Apple Music, TIDAL</div><div class="agent-actions"><button class="agent-btn">Find Playlists</button><button class="agent-btn">Stats</button><button class="agent-btn">Upload Release</button></div></div>
-        <div class="agent-card locked"><div class="agent-top"><span class="agent-name">⚡ Licensing Agent</span><span class="agent-badge locked">Locked</span></div><div class="agent-last">Sync licensing, music libraries, supervisor outreach, UGC campaigns</div><div class="agent-actions"><button class="agent-btn" disabled>Find Sync</button><button class="agent-btn" disabled>Pitch</button></div></div>
-        <div class="agent-card"><div class="agent-top"><span class="agent-name">§ Legal Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">LLC formed in IL · EIN registered · 3 contract templates generated</div><div class="agent-actions"><button class="agent-btn">Contract</button><button class="agent-btn">Review</button><button class="agent-btn">EIN Status</button></div></div>
-        <div class="agent-card locked"><div class="agent-top"><span class="agent-name">$ Finance Agent</span><span class="agent-badge locked">Locked</span></div><div class="agent-last">Business banking, transaction analysis, tax management, quarterly estimates</div><div class="agent-actions"><button class="agent-btn" disabled>Analysis</button><button class="agent-btn" disabled>Tax Prep</button></div></div>
-        <div class="agent-card"><div class="agent-top"><span class="agent-name">◎ Manager Agent</span><span class="agent-badge active">Active</span></div><div class="agent-last">Q3 release strategy · EPK in progress · 3 active projects</div><div class="agent-actions"><button class="agent-btn">Plan</button><button class="agent-btn">Schedule</button><button class="agent-btn">Research</button></div></div>
-      </div>
-    </div>
-
-    <!-- ACADEMY -->
-    <div class="main-section" id="section-academy">
-      <div class="topbar"><h1>Academy</h1><span style="font-size:12px;color:var(--text-dim)">16 courses · 307 modules · Free</span></div>
-      <div class="filter-bar" id="academyFilter"></div>
-      <div class="academy-grid" id="academyGrid"></div>
-    </div>
-
-    <!-- DIRECTORY -->
-    <div class="main-section" id="section-directory">
-      <div class="topbar"><h1>Directory</h1><span style="font-size:12px;color:var(--text-dim)">183 contacts · 6 categories · Free</span></div>
-      <div class="dir-search"><input type="text" placeholder="Search venues, radio, blogs, press, podcasts..." oninput="filterDir(this.value)"></div>
-      <div class="dir-grid" id="dirGrid">
-        <div class="dir-card" data-search="venues live music chicago national"><h3>🎤 Venues</h3><div class="count">45</div><div class="desc">Chicago + National booking contacts</div></div>
-        <div class="dir-card" data-search="radio stations il ca ny tn tx online"><h3>📻 Radio</h3><div class="count">40</div><div class="desc">Terrestrial & online stations</div></div>
-        <div class="dir-card" data-search="blogs publications genre networks"><h3>📝 Blogs</h3><div class="count">35</div><div class="desc">Major, genre, and network blogs</div></div>
-        <div class="dir-card" data-search="press media journalists chicago"><h3>📰 Press</h3><div class="count">25</div><div class="desc">Journalists & media contacts</div></div>
-        <div class="dir-card" data-search="podcasts industry songwriting discovery"><h3>🎙 Podcasts</h3><div class="count">20</div><div class="desc">Industry & discovery podcasts</div></div>
-        <div class="dir-card" data-search="community government arts grants 48th ward"><h3>🏛 Community</h3><div class="count">18</div><div class="desc">Arts orgs, grants, 48th Ward</div></div>
+      <div class="chat-footer">
+        <div class="chat-input-wrap">
+          <textarea id="chatInput" placeholder="Ask anything — PRO registration, distribution, contracts, taxes..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this);updateCharCount()"></textarea>
+          <button class="send-btn" onclick="sendMessage()" id="sendBtn" disabled>↑</button>
+        </div>
+        <div class="char-count" id="charCount"></div>
       </div>
     </div>
 
-    <!-- OUTPUTS -->
-    <div class="main-section" id="section-outputs">
-      <div class="topbar"><h1>Outputs</h1><button class="btn btn-outline">+ New Output</button></div>
-      <div class="outputs-list">
-        <div class="output-row"><div class="file-info"><span>📄</span><div><div class="file-name">LLC_Operating_Agreement_v2.pdf</div><div class="file-meta">Legal Agent · 2 days ago · 8 pages</div></div></div><span class="tag final">Final</span></div>
-        <div class="output-row"><div class="file-info"><span>🎵</span><div><div class="file-name">Metadata_Export_Singles_2026.xlsx</div><div class="file-meta">PRO Agent · 3 days ago · ISRCs: 6 tracks</div></div></div><span class="tag final">Final</span></div>
-        <div class="output-row"><div class="file-info"><span>📊</span><div><div class="file-name">Q2_Streaming_Royalty_Analysis.pdf</div><div class="file-meta">Finance Agent · 5 days ago · 12 pages</div></div></div><span class="tag final">Final</span></div>
-        <div class="output-row"><div class="file-info"><span>📝</span><div><div class="file-name">Sync_License_Pitch_Draft_v3.docx</div><div class="file-meta">Licensing Agent · 6 days ago</div></div></div><span class="tag draft">Draft</span></div>
-        <div class="output-row"><div class="file-info"><span>📋</span><div><div class="file-name">Q3_Release_Strategy_Roadmap.md</div><div class="file-meta">Manager Agent · 1 week ago</div></div></div><span class="tag final">Final</span></div>
-      </div>
+    <!-- OTHER VIEWS (placeholder — same as dashboard v2.1 but cleaner) -->
+    <div id="view-agents" style="display:none;flex-direction:column;height:100%;overflow-y:auto;padding:24px">
+      <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:20px">Agents</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px" id="agentCards"></div>
     </div>
-
-    <!-- KNOWLEDGE BASE -->
-    <div class="main-section" id="section-knowledge">
-      <div class="topbar"><h1>Knowledge Base</h1></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="info-card"><h4>📋 soul.md</h4><pre style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.6"># Artist: Midnight
+    <div id="view-outputs" style="display:none;padding:24px;overflow-y:auto">
+      <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:20px">Outputs</h2>
+      <div id="outputsList"></div>
+    </div>
+    <div id="view-prompts" style="display:none;padding:24px;overflow-y:auto">
+      <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:20px">Prompt Library</h2>
+      <div id="promptsList"></div>
+    </div>
+    <div id="view-knowledge" style="display:none;padding:24px;overflow-y:auto">
+      <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:16px">Knowledge Base</h2>
+      <pre style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.8;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px"># Artist: Midnight
 # Genre: Alternative R&B
 # PRO: BMI (IPI#: 0123456789)
 # Business: Midnight Music LLC (IL)
 # Distributor: UnitedMasters
+# Catalog: 14 works · $1,240 royalties YTD
 # Current: EP "Midnight in the Garden" (Aug 2026)
-# Goals: 100K streams, first sync, tour Q4</pre></div>
-        <div class="info-card"><h4>📚 Quick Links</h4><div style="font-size:13px;color:var(--text-muted);line-height:2.2">
-          <div>→ <a href="#section-academy" onclick="showSection('academy',document.querySelectorAll('.sidebar-item')[2])">Academy Courses</a></div>
-          <div>→ <a href="#section-directory" onclick="showSection('directory',document.querySelectorAll('.sidebar-item')[3])">Contact Directory</a></div>
-          <div>→ <a href="#section-outputs" onclick="showSection('outputs',document.querySelectorAll('.sidebar-item')[4])">Output Files</a></div>
-          <div>→ <a href="https://academy-build.vercel.app">Full Academy Site</a></div>
-          <div>→ <a href="https://directory-build.vercel.app">Full Directory Site</a></div>
-        </div></div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="main-section" id="section-settings">
-      <div class="topbar"><h1>Settings</h1></div>
-      <div class="info-card" style="margin-bottom:16px">
-        <h4>👤 Profile</h4>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
-          <div><label style="font-size:11px;color:var(--text-dim)">Name</label><input style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" value="Midnight"></div>
-          <div><label style="font-size:11px;color:var(--text-dim)">Email</label><input style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" value="midnight@email.com"></div>
-        </div>
-        <button class="btn btn-gold" style="margin-top:12px">Save Changes</button>
-      </div>
-      <div class="info-card" style="margin-bottom:16px">
-        <h4>🔑 API Keys</h4>
-        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Current plan: Free (Gemini credits). <a href="pricing.html" style="color:var(--gold)">Upgrade to BYOK</a> to use your own keys.</p>
-        <div style="margin-top:8px"><label style="font-size:11px;color:var(--text-dim)">BYOK API Key</label><input type="password" style="width:100%;padding:8px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:4px;font-family:'Inter',sans-serif" placeholder="Upgrade to BYOK to add your key" disabled></div>
-      </div>
-      <div class="info-card">
-        <h4>🔗 Integrations</h4>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
-          <button class="btn btn-outline" onclick="alert('Google Drive OAuth — coming soon')">Connect Google Drive</button>
-          <button class="btn btn-outline" style="opacity:.5;cursor:not-allowed">Signal Messaging (BYOK)</button>
-          <button class="btn btn-outline" style="opacity:.5;cursor:not-allowed">Wire (Matrix) Bridge (BYOK)</button>
-        </div>
-      </div>
+# Goals: 100K streams, first sync, tour Q4</pre>
     </div>
   </main>
+
+  <!-- CONTEXT PANEL -->
+  <aside class="context-panel" id="contextPanel">
+    <div class="context-section"><h4>Project</h4><div class="context-card"><div class="title">📀 Midnight in the Garden EP</div><div class="meta">6 tracks · Release Aug 2026</div></div><div class="context-card"><div class="title">🎵 Gold Hour (Single)</div><div class="meta">Released · 12K streams</div></div></div>
+    <div class="context-section"><h4>Recent Outputs</h4><div class="context-card"><div class="title">📄 LLC Agreement v2</div><div class="meta">Legal Agent · 2d ago</div></div><div class="context-card"><div class="title">🎵 Metadata Export</div><div class="meta">PRO Agent · 3d ago</div></div></div>
+    <div class="context-section"><h4>Quick Actions</h4><div style="display:flex;flex-direction:column;gap:6px"><button class="suggestion" style="width:100%;text-align:left" onclick="sendSuggestion('Register new song')">♩ Register song</button><button class="suggestion" style="width:100%;text-align:left" onclick="sendSuggestion('Generate splitsheet')">📋 Splitsheet</button><button class="suggestion" style="width:100%;text-align:left" onclick="sendSuggestion('Find playlists')">📀 Playlists</button></div></div>
+  </aside>
+</div>
+
+<!-- SKILLS OVERLAY -->
+<div class="skills-panel" id="skillsPanel">
+  <div class="skills-header">
+    <h3>Skills Marketplace</h3>
+    <button class="back-btn" onclick="closeSkills()">✕ Close</button>
+  </div>
+  <input class="skills-search" placeholder="Search skills..." oninput="filterSkills(this.value)">
+  <div class="skills-grid" id="skillsGrid"></div>
+</div>
+
+<!-- COMMAND PALETTE -->
+<div class="cmd-overlay" id="cmdOverlay" onclick="if(event.target===this)closeCmd()">
+  <div class="cmd-palette">
+    <input placeholder="Search agents, skills, prompts, settings..." id="cmdInput" oninput="filterCmd()" onkeydown="handleCmdKey(event)">
+    <div class="cmd-results" id="cmdResults"></div>
+  </div>
 </div>
 
 <script>
-// Navigation
-function showSection(name, btn) {
-  document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
-  document.getElementById('section-' + name).classList.add('active');
-  if (btn) btn.classList.add('active');
-}
+// ============================================================
+// STATE
+// ============================================================
+let currentAgent = 'manager';
+const agents = {
+  pro: {name:'PRO Agent',icon:'♩',cls:'pro',color:'var(--gold)',desc:'BMI/ASCAP registration, royalties, splitsheets'},
+  distribution: {name:'Distribution Agent',icon:'↗',cls:'dist',color:'var(--accent-green)',desc:'DSP accounts, playlists, ad campaigns'},
+  licensing: {name:'Licensing Agent',icon:'⚡',cls:'lic',color:'var(--accent-purple)',desc:'Sync licensing, music libraries, pitches'},
+  legal: {name:'Legal Agent',icon:'§',cls:'legal',color:'var(--accent-blue)',desc:'LLC, EIN, contracts, operating agreements'},
+  finance: {name:'Finance Agent',icon:'$',cls:'fin',color:'var(--accent-cyan)',desc:'Banking, taxes, transaction analysis'},
+  manager: {name:'Manager Agent',icon:'◎',cls:'mgr',color:'var(--accent-orange)',desc:'Business plans, calendar, strategy, routing'},
+};
 
-// Dashboard chat
-function sendDashboardChat() {
-  const input = document.getElementById('chatInput');
-  const msgs = document.getElementById('chatMessages');
-  const text = input.value.trim();
-  if (!text) return;
-  msgs.innerHTML += `<div class="chat-msg user">${text}</div>`;
-  input.value = '';
-  msgs.scrollTop = msgs.scrollHeight;
-  setTimeout(() => {
-    msgs.innerHTML += `<div class="chat-msg agent">Got it! I'm on it. Want me to dive deeper into "${text.substring(0,40)}${text.length>40?'...':''}" or should we look at something else?</div>`;
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 800);
-}
-
-// Academy data
-const courses = [
-  {t:"How to Brand Yourself as an Artist",c:"Branding",n:18,u:"courses/brand-yourself-as-artist.html"},
-  {t:"How to Add Music to Collaborative Playlist",c:"Streaming",n:14,u:"courses/add-music-collaborative-playlist.html"},
-  {t:"How to Add Songs to Your PRO",c:"Royalties",n:20,u:"courses/add-songs-to-pro.html"},
-  {t:"How to Book and Promote Your Own Shows",c:"Marketing",n:16,u:"courses/promote-your-shows.html"},
-  {t:"How to Copyright Your Music",c:"Legal",n:19,u:"courses/copyright-your-music.html"},
-  {t:"How to Create a Music Catalogue",c:"Business",n:16,u:"courses/create-music-catalogue.html"},
-  {t:"How to Distribute Your Music",c:"Distribution",n:21,u:"courses/distribute-your-music.html"},
-  {t:"How to File Business Taxes",c:"Finance",n:23,u:"courses/file-business-taxes.html"},
-  {t:"How to Set Up a Business Bank Account",c:"Finance",n:20,u:"courses/setup-business-bank-account.html"},
-  {t:"How to Set Up an LLC",c:"Legal",n:20,u:"courses/setup-llc.html"},
-  {t:"How to Set Up a CRM",c:"Business",n:20,u:"courses/setup-crm.html"},
-  {t:"How to Submit Music to Blogs & Playlists",c:"Marketing",n:23,u:"courses/submit-music-blogs-playlists.html"},
-  {t:"How to License Your Music",c:"Licensing",n:21,u:"courses/license-your-music.html"},
-  {t:"How to Register an E.I.N.",c:"Legal",n:20,u:"courses/register-ein.html"},
-  {t:"How to Register with a P.R.O.",c:"Royalties",n:17,u:"courses/register-with-pro.html"},
-  {t:"How to Trademark Your Music",c:"Legal",n:19,u:"courses/trademark-your-music.html"},
+const skills = [
+  {name:'PRO Registration',icon:'♩',desc:'Auto-register songs with BMI, ASCAP, or SESAC',cat:'PRO',installed:true},
+  {name:'Splitsheet Generator',icon:'📋',desc:'Create professional splitsheets from track metadata',cat:'PRO',installed:true},
+  {name:'Metadata Extractor',icon:'🎵',desc:'Extract ISRC, BPM, key from audio files',cat:'PRO',installed:false},
+  {name:'Playlist Submitter',icon:'📀',desc:'Auto-submit to genre-matched Spotify playlists',cat:'Distribution',installed:true},
+  {name:'Ad Campaign Manager',icon:'📣',desc:'Create and optimize social ads for releases',cat:'Distribution',installed:false},
+  {name:'DP Statistics',icon:'📊',desc:'Aggregate streaming stats across all DSPs',cat:'Distribution',installed:false},
+  {name:'Sync Opportunity Finder',icon:'🎬',desc:'Search music libraries and supervisor databases',cat:'Licensing',installed:false},
+  {name:'Pitch Template Generator',icon:'📝',desc:'Generate tailored pitch emails for supervisors',cat:'Licensing',installed:false},
+  {name:'LLC Formation',icon:'⚖️',desc:'File LLC formation documents with your state',cat:'Legal',installed:true},
+  {name:'Contract Generator',icon:'📄',desc:'Generate industry-standard music contracts',cat:'Legal',installed:true},
+  {name:'Tax Estimator',icon:'💰',desc:'Calculate quarterly estimated tax payments',cat:'Finance',installed:false},
+  {name:'Expense Tracker',icon:'📊',desc:'Categorize and track music business expenses',cat:'Finance',installed:false},
+  {name:'Release Planner',icon:'📅',desc:'Create release timelines with milestones',cat:'Manager',installed:true},
+  {name:'EPK Builder',icon:'📋',desc:'Generate professional Electronic Press Kits',cat:'Manager',installed:false},
+  {name:'Brand Kit Generator',icon:'🎨',desc:'Create consistent visual brand assets',cat:'Manager',installed:false},
 ];
-const catColors = {Branding:'#ef4444',Streaming:'#22c55e',Royalties:'#3b82f6',Marketing:'#a855f7',Legal:'#06b6d2',Business:'#c9a227',Distribution:'#f97316',Finance:'#22c55e',Licensing:'#a855f7'};
 
-function renderAcademy(filter=null) {
-  const cats = [...new Set(courses.map(c=>c.c))];
-  document.getElementById('academyFilter').innerHTML = `<span class="filter-chip ${!filter?'on':''}" onclick="renderAcademy(null)">All</span>` + cats.map(c=>`<span class="filter-chip ${filter===c?'on':''}" onclick="renderAcademy('${c}')">${c}</span>`).join('');
-  const filtered = filter ? courses.filter(c=>c.c===filter) : courses;
-  document.getElementById('academyGrid').innerHTML = filtered.map(c=>`
-    <a href="${c.u}" class="academy-card">
-      <span class="cat" style="background:${(catColors[c.c]||'#c9a227')+'20'};color:${catColors[c.c]||'#c9a227'}">${c.c}</span>
-      <h3>${c.t}</h3>
-      <span class="lessons">${c.n} modules</span>
-    </a>`).join('');
+const prompts = [
+  {cat:'Release',items:['Create a release strategy for my upcoming single','Generate metadata for my new EP','Build a Spotify pre-save campaign','Write my artist bio for press']},
+  {cat:'Promotion',items:['Find playlist curators for indie R&B','Write a pitch email to music blogs','Create a social media content calendar','Design a TikTok promotion strategy']},
+  {cat:'Legal',items:['Draft a producer agreement for my track','Review my collaboration contract','Walk me through LLC formation','Generate a work-for-hire agreement']},
+  {cat:'Finance',items:['Calculate my streaming royalties','Estimate quarterly taxes','Create a tour budget template','Analyze my revenue streams']},
+  {cat:'Creative',items:['Help me write song lyrics','Suggest chord progressions for R&B','Create a mood board for my album art','Brainstorm music video concepts']},
+];
+
+// ============================================================
+// CHAT
+// ============================================================
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addMessage(msg, 'user');
+  input.value = ''; autoResize(input); updateCharCount();
+  document.getElementById('chatEmpty').style.display = 'none';
+  
+  // Typing indicator
+  const container = document.getElementById('chatMessages');
+  const typingEl = document.createElement('div');
+  typingEl.className = 'message agent';
+  typingEl.innerHTML = '<div class="avatar" style="background:var(--card)">⋯</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+  container.appendChild(typingEl);
+  container.scrollTop = container.scrollHeight;
+  
+  // Simulate agent response
+  setTimeout(() => {
+    typingEl.remove();
+    const a = agents[currentAgent];
+    const low = msg.toLowerCase();
+    let resp;
+    if (low.includes('register')||low.includes('pro')||low.includes('bmi')||low.includes('ascap')) {
+      resp = `Let's register your music! Here's what I need:\n\n1. **Song title** and **ISRC** (if you have one)\n2. **Co-writers** and their **split percentages**\n3. Your **PRO** (I see you're with BMI)\n\nI can register this in about 2 minutes. Want me to proceed with the info I already have in your catalog?`;
+      switchAgent('pro');
+    } else if (low.includes('playlist')||low.includes('spotify')||low.includes('distribution')) {
+      resp = `Great news — I found 8 playlists matching your genre (Alternative R&B):\n\n• **Indie R&B Rising** (12K followers)\n• **Soulful Sundays** (8K followers)\n• **Late Night Vibes** (15K followers)\n\nI'll submit "Gold Hour" to all three. Want me to customize the pitch for each curator?`;
+      switchAgent('distribution');
+    } else if (low.includes('llc')||low.includes('contract')||low.includes('legal')) {
+      resp = `Your LLC (Midnight Music LLC) is already formed in Illinois. Here's what I can help with:\n\n• **Operating Agreement** — I have v2 ready for review\n• **EIN** — Registered and active\n• **Contract templates** — Producer, collaboration, work-for-hire\n\nWhat document do you need?`;
+      switchAgent('legal');
+    } else if (low.includes('tax')||low.includes('revenue')||low.includes('money')||low.includes('finance')) {
+      resp = `Here's your Q2 snapshot:\n\n| Stream | Revenue |\n|--------|--------|\n| Spotify | $680 |\n| Apple Music | $320 |\n| YouTube | $140 |\n| Sync (1 placement) | $100 |\n| **Total** | **$1,240** |\n\nYour Q3 estimated tax payment of ~$310 is due October 15. Want me to prepare the filing?`;
+      switchAgent('finance');
+    } else if (low.includes('license')||low.includes('sync')||low.includes('tv')||low.includes('film')) {
+      resp = `I found 3 sync opportunities matching your sound:\n\n1. **Netflix drama** — seeking moody R&B for season 3\n2. **Independent film** — looking for original music\n3. **Commercial** — tech brand seeking fresh artists\n\nI can prepare pitch packages for all three. Each includes your EPK, top tracks, and a tailored pitch. Want me to proceed?`;
+      switchAgent('licensing');
+    } else {
+      resp = `I can help with that. Here's what I'd recommend:\n\n• If this is about **royalties or registration**, I'll route to the PRO Agent\n• For **playlists or distribution**, the Distribution Agent\n• For **legal or contracts**, the Legal Agent\n• For **money matters**, the Finance Agent\n• For **licensing**, the Licensing Agent\n\nWhat direction should we take?`;
+    }
+    addMessage(resp, 'agent');
+  }, 1200);
 }
 
-// Directory filter
-function filterDir(q) {
-  document.querySelectorAll('#dirGrid .dir-card').forEach(c => {
-    c.style.display = !q || c.dataset.search.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
-  });
+function sendSuggestion(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
 }
+
+function switchAgent(key) {
+  currentAgent = key;
+  const a = agents[key];
+  document.getElementById('agentAvatar').textContent = a.icon;
+  document.getElementById('agentAvatar').className = 'agent-avatar ' + a.cls;
+  document.getElementById('agentName').textContent = a.name;
+}
+
+function cycleAgent() {
+  const keys = Object.keys(agents);
+  const idx = keys.indexOf(currentAgent);
+  const next = keys[(idx + 1) % keys.length];
+  switchAgent(next);
+}
+
+function addMessage(text, role) {
+  const container = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'message ' + role;
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const avatarIcon = role === 'user' ? 'M' : agents[currentAgent].icon;
+  const avatarClass = role === 'user' ? '' : agents[currentAgent].cls;
+  el.innerHTML = `
+    <div class="avatar${avatarClass ? ' agent-avatar '+avatarClass : ''}" style="${role==='user'?'background:var(--gold-subtle);color:var(--gold)':''}">${avatarIcon}</div>
+    <div>
+      <div class="bubble">${text.split('\n').map(l => l.startsWith('•')||l.startsWith('|')||l.startsWith('1.')||l.startsWith('2.')||l.startsWith('3.') ? l : l ? `<p>${l}</p>` : '<br>').join('')}</div>
+      <div class="time">${time}</div>
+    </div>`;
+  container.appendChild(el);
+  container.parentElement.scrollTop = container.parentElement.scrollHeight;
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openCmd(); }
+  if (e.key >= '1' && e.key <= '6' && (e.metaKey || e.ctrlKey)) {
+    e.preventDefault();
+    const keys = Object.keys(agents);
+    switchAgent(keys[e.key - 1]);
+  }
+}
+
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('chatInput').value.length; document.getElementById('sendBtn').disabled = !document.getElementById('chatInput').value.trim(); }
+
+// ============================================================
+// VIEW SWITCHING
+// ============================================================
+function switchView(view) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const views = ['chat','agents','outputs','prompts','knowledge','academy','directory','settings'];
+  views.forEach(v => { const el = document.getElementById('view-'+v); if (el) el.style.display = v===view ? 'flex' : 'none'; });
+  document.getElementById('view-chat').style.display = view==='chat' ? 'flex' : 'none';
+  // Build content for views
+  if (view === 'agents') buildAgentCards();
+  if (view === 'outputs') buildOutputs();
+  if (view === 'prompts') buildPrompts();
+}
+
+function buildAgentCards() {
+  document.getElementById('agentCards').innerHTML = Object.entries(agents).map(([k,a]) => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .15s" onclick="switchAgent('${k}');switchView('chat')">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:15px;font-weight:700"><span class="agent-avatar ${a.cls}" style="display:inline-flex;margin-right:8px">${a.icon}</span>${a.name}</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(34,197,94,.12);color:var(--accent-green)">Active</span>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted)">${a.desc}</p>
+    </div>`).join('');
+}
+
+function buildOutputs() {
+  document.getElementById('outputsList').innerHTML = [
+    {name:'LLC_Operating_Agreement_v2.pdf',agent:'Legal Agent',time:'2 days ago',tag:'Final'},
+    {name:'Metadata_Export_EP_2026.xlsx',agent:'PRO Agent',time:'3 days ago',tag:'Final'},
+    {name:'Q2_Revenue_Analysis.pdf',agent:'Finance Agent',time:'5 days ago',tag:'Final'},
+    {name:'Sync_Pitch_Draft_v3.docx',agent:'Licensing Agent',time:'6 days ago',tag:'Draft'},
+  ].map(o=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:18px">📄</span><div><div style="font-weight:600">${o.name}</div><div style="font-size:11px;color:var(--text-dim)">${o.agent} · ${o.time}</div></div></div><span style="font-size:10px;padding:3px 8px;border-radius:100px;background:${o.tag==='Final'?'rgba(34,197,94,.12)':'rgba(168,85,247,.12)'};color:${o.tag==='Final'?'var(--accent-green)':'var(--accent-purple)'};font-weight:600">${o.tag}</span></div>`).join('');
+}
+
+function buildPrompts() {
+  document.getElementById('promptsList').innerHTML = prompts.map(c => `
+    <div style="margin-bottom:24px">
+      <h4 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px">${c.cat}</h4>
+      ${c.items.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .1s" onclick="sendSuggestion('${p}');switchView('chat')" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><span style="font-size:13px;color:var(--text-muted)">${p}</span><span style="font-size:10px;color:var(--text-dim)">Use →</span></div>`).join('')}
+    </div>`).join('');
+}
+
+// ============================================================
+// SKILLS
+// ============================================================
+function openSkills() {
+  document.getElementById('skillsPanel').classList.add('open');
+  renderSkills();
+}
+function closeSkills() { document.getElementById('skillsPanel').classList.remove('open'); }
+function renderSkills(filter='') {
+  const filtered = filter ? skills.filter(s => s.name.toLowerCase().includes(filter)||s.cat.toLowerCase().includes(filter)) : skills;
+  document.getElementById('skillsGrid').innerHTML = filtered.map(s => `
+    <div class="skill-card">
+      <div class="skill-icon">${s.icon}</div>
+      <div class="skill-name">${s.name}</div>
+      <div class="skill-desc">${s.desc}</div>
+      <div class="skill-meta"><span>${s.cat}</span></div>
+      <button class="install-btn ${s.installed?'installed':''}" onclick="toggleSkill(this,'${s.name}')">${s.installed?'✓ Installed':'+ Install'}</button>
+    </div>`).join('');
+}
+function filterSkills(q) { renderSkills(q.toLowerCase()); }
+function toggleSkill(btn, name) {
+  const skill = skills.find(s => s.name === name);
+  skill.installed = !skill.installed;
+  btn.textContent = skill.installed ? '✓ Installed' : '+ Install';
+  btn.classList.toggle('installed', skill.installed);
+}
+
+// ============================================================
+// COMMAND PALETTE
+// ============================================================
+function openCmd() { document.getElementById('cmdOverlay').classList.add('open'); document.getElementById('cmdInput').focus(); filterCmd(); }
+function closeCmd() { document.getElementById('cmdOverlay').classList.remove('open'); }
+function filterCmd() {
+  const q = (document.getElementById('cmdInput').value||'').toLowerCase();
+  const items = [
+    ...Object.entries(agents).map(([k,a]) => ({type:'agent',icon:a.icon,name:a.name,desc:a.desc,action:()=>{switchAgent(k);switchView('chat');closeCmd()}})),
+    ...skills.map(s => ({type:'skill',icon:s.icon,name:s.name,desc:s.desc,action:()=>{openSkills();closeCmd()}})),
+    ...prompts.flatMap(c => c.items.map(p => ({type:'prompt',icon:'✦',name:p,desc:c.cat,action:()=>{sendSuggestion(p);switchView('chat');closeCmd()}}))),
+    {type:'action',icon:'⚙',name:'Toggle Context Panel',desc:'Show/hide project context',action:()=>{toggleContext();closeCmd()}},
+    {type:'action',icon:'📁',name:'View Outputs',desc:'Generated files',action:()=>{switchView('outputs');closeCmd()}},
+  ];
+  const filtered = q ? items.filter(i => i.name.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q)) : items.slice(0,8);
+  document.getElementById('cmdResults').innerHTML = filtered.map((i,idx) => `
+    <div class="cmd-item ${idx===0?'selected':''}" onclick="(${i.action.toString()})()">
+      <div class="icon">${i.icon}</div>
+      <div class="info"><div class="name">${i.name}</div><div class="desc">${i.desc}</div></div>
+      <span class="shortcut">${i.type}</span>
+    </div>`).join('');
+}
+function handleCmdKey(e) {
+  if (e.key === 'Escape') closeCmd();
+  if (e.key === 'Enter') {
+    const sel = document.querySelector('.cmd-item.selected');
+    if (sel) sel.click();
+  }
+}
+
+// ============================================================
+// CONTEXT TOGGLE
+// ============================================================
+function toggleContext() { document.getElementById('app').classList.toggle('context-open'); }
 
 // Init
-renderAcademy();
+document.addEventListener('keydown', e => {
+  if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openCmd(); }
+});
 </script>
 </body>
 </html>
